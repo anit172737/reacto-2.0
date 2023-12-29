@@ -1,25 +1,27 @@
 import React from "react";
-import { Trash } from "react-feather";
+import { Trash2 } from "react-feather";
 import { useDispatch } from "react-redux";
 import { setOpenDeleteForm } from "../../pages/admin/interview/javascript/store";
 
-const DeleteForm = ({
-    deleteFunction,
-    payload
-}) => {
-    
-    const dispatch = useDispatch()
-    const handleDelete = () => {
-      deleteFunction(payload);
-    };
+const DeleteForm = ({ deleteFunction, payload }) => {
+  const dispatch = useDispatch();
+  const handleDelete = () => {
+    deleteFunction(payload);
+  };
   return (
     <div className="addModal">
       <div className="addModal__content addModal__content--padding">
         <div className="addModal__content--header">
           <h3 className="mb-0">Are You Sure ?</h3>
+          <small>You won't revert this!</small>
         </div>
-        <div style={{ display: "grid", justifyContent: "center" }}>
-          <Trash size={30} />
+        <div
+          style={{
+            display: "grid",
+            justifyContent: "center",
+          }}
+        >
+          <Trash2 size={35} style={{ color: "orangered" }} />
         </div>
 
         <div className="addModal__content--footer">

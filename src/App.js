@@ -32,7 +32,14 @@ const App = () => {
           }
         >
           <RouterProvider router={router} />
-          <Toaster />
+          <Toaster
+            toastOptions={{
+              className: "",
+              style: {
+                fontSize: "18px",
+              },
+            }}
+          />
         </Suspense>
       </div>
     </LoginContext.Provider>
