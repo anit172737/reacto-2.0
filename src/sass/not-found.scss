@@ -1,0 +1,23 @@
+@import "./base";
+
+.notFound {
+  display: grid;
+  justify-content: center;
+
+  &_btn {
+    background-color: $color-primary;
+    color: white;
+    font-size: 24px;
+    padding: 0px 15px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: myFont;
+
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0px 5px 10px gray;
+    }
+  }
+}

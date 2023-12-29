@@ -1,0 +1,15 @@
+@import "./base";
+
+@mixin container {
+  // background-color: $color-primary-light-1;
+  // box-shadow: 0 8px 25px -8px #82868b;
+  // border-radius: 15px;
+  display: grid;
+  // justify-content: center;
+  align-self: start;
+  padding: 0px 20px 20px;
+  width: 100%;
+  color: $color-primary-dark;
+  // background-color: white;
+  // overflow: auto;
+}

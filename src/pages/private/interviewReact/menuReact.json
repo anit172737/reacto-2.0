@@ -1,0 +1,86 @@
+[
+  {
+    "question": "What is React ?",
+    "answer": "React, sometimes reffered to as a frontend JavaScript framework, is a JavaScript library created by Facebook. React is a tool for building UI components.",
+    "speaking": false,
+    "loading": false
+  },
+  {
+    "question": "What is JSX ?",
+    "answer": "JSX stands for Javascript and XML, it is a syntax extension for javascript. JSX allows us to write HTML like code in javascript.",
+    "speaking": false,
+    "loading": false
+  },
+  {
+    "question": "What is State ?",
+    "answer": "State is a built-in React object, it is used to contain data or information about the component.",
+    "speaking": false,
+    "loading": false
+  },
+  {
+    "question": "what is Prop ?",
+    "answer": "In React Prop is used to pass data from one component to another component. It is read-only means it cannot be changed after initialize.",
+    "speaking": false,
+    "loading": false
+  },
+  {
+    "question": "In react is it possible to pass data from child to parent ?",
+    "answer": "Yes it is, first pass the function as a prop to child component, then call a function in the child component and pass data as argument, then access the data in the parent.",
+    "speaking": false,
+    "loading": false
+  },
+  {
+    "question": "what is DOM ?",
+    "answer": "DOM stands for Document Object Model, it is a structural representation of HTML elements.",
+    "speaking": false,
+    "loading": false
+  },
+  {
+    "question": "what is Virtual DOM ?",
+    "answer": "Virtual DOM is a light weight copy of real DOM or virtual copy of real DOM. when any state changes in a component the virtual DOM is created. new virtual DOM is compares with previous virtual DOM, this process is called as DOM diffing and only re-renderes the updated elements/nodes.",
+    "speaking": false,
+    "loading": false
+  },
+  {
+    "question": "what is HOC ?",
+    "answer": "HOC stands for Higher Order Component. it is a advanced technique of reusing component functionality logic. it is simply takes original component and returns enhanced component.",
+    "speaking": false,
+    "loading": false
+  },
+  {
+    "question": "what is Render Prop ?",
+    "answer": "It is a technique to share code between react component using a props whose value is a function.",
+    "speaking": false,
+    "loading": false
+  },
+  {
+    "question": "what is useState Hook ?",
+    "answer": "useState hook allows us to have state variables in functional components",
+    "speaking": false,
+    "loading": false
+  },
+  {
+    "question": "what is useRef ?",
+    "answer": "The useRef is a hook that allows us to directly create a reference to the DOM element in the functional component.",
+    "speaking": false,
+    "loading": false
+  },
+  {
+    "question": "what is useMemo and useCallback ?",
+    "answer": "useMemo is a hook that returns a memoize value when one of his dependency changed and useCallback returns a memoize callback function when one of his dependency changed.",
+    "speaking": false,
+    "loading": false
+  },
+  {
+    "question": "what is fragments ?",
+    "answer": "Fragments allows us to group a list of child elements without adding extra node to DOM.",
+    "speaking": false,
+    "loading": false
+  },
+  {
+    "question": "what is Controlled and Uncontrolled component ?",
+    "answer": "In Controlled component form data handled by react component and in Uncontrolled component form data handle by DOM itself.",
+    "speaking": false,
+    "loading": false
+  }
+]

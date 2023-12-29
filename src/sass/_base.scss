@@ -1,0 +1,60 @@
+$color-primary: #6c63ff;
+// $color-primary: #7e77fd;
+$color-primary-dark: #2f2e47;
+$color-primary-dark-1: #000065;
+// $color-primary-light: #e1e0fa;
+
+$color-primary-light: #f4ecff;
+$color-primary-light-1: #d2d0ff;
+$color-primary-light-2: #b8b5ff;
+$color-primary-light-3: #9b97ff;
+$color-secondary: #ec0063;
+$color-ternory: #e8165d;
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: $color-primary;
+  border-radius: 1rem;
+
+  &:hover {
+    background-color: $color-primary-dark;
+    cursor: pointer;
+  }
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+@font-face {
+  font-family: myFont;
+  src: url(../assets/font/NTR-Regular.ttf);
+}
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  font-weight: 500;
+  font-family: myFont;
+  font-size: 2.5rem;
+  color: $color-primary;
+}
+
+.react-dataTable {
+  border-radius: 10px !important;
+  box-shadow: 0px 5px 10px rgb(208, 208, 208) !important;
+  overflow: hidden;
+}
+
+.rdt_TableHeadRow {
+  border-bottom: 1px solid $color-primary !important;
+}

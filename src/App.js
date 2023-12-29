@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense, useState, useRef } from "react";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes/router";
+import { LoginContext } from "./utility/loginContext";
+import { Audio } from "react-loader-spinner";
+import { Toaster } from "react-hot-toast";
 
-function App() {
+const App = () => {
+  const [googleLogin, setGoogleLogin] = useState(false);
+  const [user, setUser] = useState(null);
+  const googleLogoutRef = useRef(null);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <LoginContext.Provider
+      value={{ googleLogin, setGoogleLogin, user, setUser, googleLogoutRef }}
+    >
+      <div
+        style={{
+          display: "grid",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Suspense
+          fallback={
+            <Audio
+              height="70"
+              width="70"
+              radius="9"
+              color="#7e77fd"
+              ariaLabel="loading"
+            />
+          }
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <RouterProvider router={router} />
+          <Toaster />
+        </Suspense>
+      </div>
+    </LoginContext.Provider>
   );
-}
+};
 
 export default App;

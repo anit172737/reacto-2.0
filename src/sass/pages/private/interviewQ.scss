@@ -1,0 +1,91 @@
+@import "../../mixins.scss";
+@import "../../base";
+
+.interviewQ {
+  @include container;
+  gap: 20px;
+
+  &:first-child {
+    margin-top: -20px;
+  }
+
+  &_sec {
+    // background-color: $color-primary-light-1;
+    box-shadow: 0px 5px 10px $color-primary-light-1;
+    // box-shadow: 0px 5px 10px gray;
+    // border: 2px solid $color-primary-light-1;
+
+    // background-image: linear-gradient(
+    //   to left,
+    //   $color-primary-light-1,
+    //   rgb(237, 237, 237)
+    // );
+
+    border-radius: 10px;
+    padding: 0px 20px 9px;
+
+    &-1 {
+      display: grid;
+      grid-auto-flow: column;
+      align-items: center;
+      &-speech {
+        display: grid;
+        grid-auto-flow: column;
+        padding: 5px 5px;
+        border-radius: 50px;
+        background-color: $color-primary;
+        width: max-content;
+        justify-self: end;
+        color: white;
+
+        &:hover {
+          background-color: $color-primary-light-3;
+        }
+
+        &:hover &-speak {
+          transform: scale(1.2);
+        }
+
+        &-speak {
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+      }
+    }
+  }
+}
+
+.animate {
+  display: grid;
+  grid-auto-flow: column;
+  padding: 6px 6px;
+  border-radius: 50px;
+  background-color: $color-primary-light-2;
+  width: max-content;
+  justify-self: end;
+  // position: relative;
+  transition: all 0.2s;
+
+  // &::before {
+  // content: "";
+  // position: absolute;
+  // width: 50px;
+  // height: 50px;
+  // background-image: conic-gradient(
+  //   transparent,
+  //   transparent,
+  //   transparent,
+  //   $color-ternory
+  // );
+  // animation: moving-border 4s linear infinite;
+  // }
+}
+
+@keyframes moving-border {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
