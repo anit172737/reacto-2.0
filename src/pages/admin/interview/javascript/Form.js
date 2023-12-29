@@ -13,12 +13,8 @@ const defaultValues = {
   answer: "",
 };
 const AddForm = () => {
-  const { selected, openForm,jsQtnList } = useSelector(state => state.javascriptMaster)
+  const { selected } = useSelector(state => state.javascriptMaster)
   console.log('selected', selected)
-  // console.log('openForm', openForm)
-  // const { selected, contactList } = useSelector(
-  //   (state) => state?.contactMaster
-  // );
   const dispatch = useDispatch();
   const {
     reset,
@@ -34,7 +30,6 @@ const AddForm = () => {
     dispatch(setOpenForm(false));
     dispatch(setSelecetd(null))
     reset();
-    // dispatch(selectContact(null));
   };
 
   const onSubmit = async (data) => {
@@ -44,30 +39,16 @@ const AddForm = () => {
 
     
     if (selected) {
-      // await dispatch(setLoader(true));
-      // const arr = jsQtnList.filter(e => e.id === selected.id)
       const modify = {
         id:selected.id,
         question: data.question,
         answer:data.answer
       }
-    // const modifiedArray = jsQtnList.map((obj) => {
-    //   if (obj.id === selected.id) {
-    //     return {
-    //       ...obj,
-    //       question: data.question,
-    //       answer: data.answer
-    //     };
-    //   }
-    //   return obj;
-    // });
 
     response = await dispatch(editJsQtn(modify));
-      // toast.success("Question Edited Successfully",{id:data?.question});
     } else {
     // await dispatch(setLoader(true));
     response = await dispatch(addJsQtn(data))
-      // toast.success("Question Added Successfully",{id:data?.question});
     }
     if (response) {
       handleModalClosed();
@@ -76,10 +57,8 @@ const AddForm = () => {
 
   useEffect(() => {
     if (selected) {
-      // setValue("id", selected.id);
       setValue("question", selected.question);
       setValue("answer", selected.answer);
-      // setValue("status", selected.status);
     }
   }, []);
 
@@ -87,7 +66,6 @@ const AddForm = () => {
     <div className="addModal">
       <div className="addModal__content">
         <div className="addModal__content--header">
-          {/* <h2 className="mb-0">{selected ? "Edit" : "Add"} Contact</h2> */}
           <h2 className="addModal__content--header-h2">{selected ? 'Edit': 'Add'} Question</h2>
         </div>
 

@@ -8,10 +8,11 @@ import DataTable, { createTheme } from "react-data-table-component";
 import { columns } from "./Columns";
 import AddForm from "./Form";
 import "../../../../sass/pages/admin/container.scss";
-import { fetchJsQtnList, setOpenForm, setSelecetd } from "./store";import { Button } from "reactstrap";
+import { deleteJsQtn, fetchJsQtnList, setOpenDeleteForm, setOpenForm, setSelecetd } from "./store";import { Button } from "reactstrap";
 import { Edit, Trash2 } from "react-feather";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import "../../../../sass/pages/admin/columns.scss";
+import DeleteForm from "../../../../components/deleteForm";
 
 createTheme(
   "solarized",
@@ -65,13 +66,8 @@ const customStyles = {
 
 const JavascriptTable = () => {
   const [search, setSearch] = useState("");
-  const { jsQtnList,openForm } = useSelector((state) => state.javascriptMaster);
+  const { jsQtnList,openForm, openDeleteForm, selected } = useSelector((state) => state.javascriptMaster);
   const dispatch = useDispatch();
-
-  const handleEdit = (row) => {
-    dispatch(setSelecetd(row))
-   dispatch(setOpenForm(true))
-  }
 
   const columns = [
     {
@@ -136,7 +132,7 @@ const JavascriptTable = () => {
               size="sm"
               color="transparent"
               className="btn"
-              onClick={() => handleEdit(row)}
+              onClick={() => handleOpenEditForm(row)}
             >
               <Edit className="font-medium-2 btn_edit" />
             </Button>
@@ -149,6 +145,7 @@ const JavascriptTable = () => {
               //     dispatch(selectDesignation(row))
               //     setDeleteModal(true)
               //   }}
+              onClick={()=>handleOpenDeleteForm(row)}
             >
               <Trash2 className="font-medium-2 btn_delete" />
             </Button>
@@ -165,9 +162,31 @@ const JavascriptTable = () => {
     return jsQtnList;
   };
 
+  const handleDelete = (payload) => {
+    dispatch(deleteJsQtn(payload))
+    dispatch(setOpenDeleteForm(false))
+  }
+
+  const deleteConfig = {
+    deleteFunction: handleDelete,
+    payload: {
+      id:selected?.id
+    }
+  }
+  
   const handleAdd = () => {
-   dispatch(setOpenForm(true)) 
-  };
+    dispatch(setOpenForm(true)) 
+   };
+
+  const handleOpenEditForm = (row) => {
+    dispatch(setSelecetd(row))
+   dispatch(setOpenForm(true))
+  }
+
+  const handleOpenDeleteForm = (row) => {
+    dispatch(setSelecetd(row))
+    dispatch(setOpenDeleteForm(true))
+  }
 
   useEffect(() => {
     dispatch(fetchJsQtnList());
@@ -176,6 +195,7 @@ const JavascriptTable = () => {
   return (
     <div className="adminContainer">
       {openForm && <AddForm setOpenForm={setOpenForm} />}
+      {openDeleteForm && <DeleteForm {...deleteConfig}/>}
       <AdminHeader
         title="Javascript Data Table"
         setSearch={setSearch}

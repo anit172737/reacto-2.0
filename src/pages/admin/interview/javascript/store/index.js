@@ -37,10 +37,7 @@ export const editJsQtn = createAsyncThunk(
   "javascriptMaster",
   async (params, { dispatch }) => {
     try {
-      console.log('params', params)
-     const response= await axios.put(baseUrl + JavascriptFetch + `/${params.id}`, params).then(res=>res.data.error ? toast.error(res.data.error): toast.success(res.data.message))
-      // toast.success('Question edited successfully')
-      console.log('response', response)
+      await axios.put(baseUrl + JavascriptFetch + `/${params.id}`, params).then(res=>res.data.error ? toast.error(res.data.error): toast.success(res.data.message))
       dispatch(fetchJsQtnList())
       return true
     } catch (error) {
@@ -49,13 +46,27 @@ export const editJsQtn = createAsyncThunk(
   }
 );
 
+export const deleteJsQtn = createAsyncThunk(
+  'javascriptMaster',
+  async (params, { dispatch }) => {
+    try {
+      await axios.delete(baseUrl + JavascriptFetch + `/${params.id}`).then(res =>res.data.error?  toast.error(res.data.error): toast.success(res.data.message))
+      dispatch(fetchJsQtnList())
+      return true
+    } catch (error) {
+      toast.error(error?.response?.data?.error)
+    }
+  }
+)
+
 const javascriptMaster = createSlice({
   name: "javascriptMaster",
   initialState: {
     jsQtnList: [],
     search: "",
     selected: null,
-    openForm: false
+    openForm: false,
+    openDeleteForm:false
   },
   reducers: {
     setSearch: (state, action) => {
@@ -67,6 +78,9 @@ const javascriptMaster = createSlice({
     setOpenForm: (state, action) => {
       state.openForm = action.payload
     },
+    setOpenDeleteForm: (state, action) => {
+      state.openDeleteForm = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchJsQtnList.fulfilled, (state, action) => {
@@ -75,6 +89,6 @@ const javascriptMaster = createSlice({
   },
 });
 
-export const { setSearch, setSelecetd, setOpenForm } = javascriptMaster.actions;
+export const { setSearch, setSelecetd, setOpenForm, setOpenDeleteForm } = javascriptMaster.actions;
 
 export default javascriptMaster.reducer;
