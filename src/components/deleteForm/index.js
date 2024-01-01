@@ -13,7 +13,7 @@ const DeleteForm = ({ deleteFunction, payload }) => {
       <div className="addModal__content addModal__content--padding">
         <div className="addModal__content--header">
           <h3 className="mb-0">Are You Sure ?</h3>
-          <small>You won't revert this!</small>
+          <small>"You won't revert this!"</small>
         </div>
         <div
           style={{
@@ -24,7 +24,7 @@ const DeleteForm = ({ deleteFunction, payload }) => {
           <Trash2 size={35} style={{ color: "orangered" }} />
         </div>
 
-        <div className="addModal__content--footer">
+        <div className="addModal__content--footer addModal__content--footer-delete">
           <button
             className="addModal__content--footer-btn"
             onClick={handleDelete}

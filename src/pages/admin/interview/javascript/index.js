@@ -8,7 +8,14 @@ import DataTable, { createTheme } from "react-data-table-component";
 import { columns } from "./Columns";
 import AddForm from "./Form";
 import "../../../../sass/pages/admin/container.scss";
-import { deleteJsQtn, fetchJsQtnList, setOpenDeleteForm, setOpenForm, setSelecetd } from "./store";import { Button } from "reactstrap";
+import {
+  deleteJsQtn,
+  fetchJsQtnList,
+  setOpenDeleteForm,
+  setOpenForm,
+  setSelecetd,
+} from "./store";
+import { Button } from "reactstrap";
 import { Edit, Trash2 } from "react-feather";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import "../../../../sass/pages/admin/columns.scss";
@@ -63,10 +70,11 @@ const customStyles = {
   },
 };
 
-
 const JavascriptTable = () => {
   const [search, setSearch] = useState("");
-  const { jsQtnList,openForm, openDeleteForm, selected } = useSelector((state) => state.javascriptMaster);
+  const { jsQtnList, openForm, openDeleteForm, selected } = useSelector(
+    (state) => state.javascriptMaster
+  );
   const dispatch = useDispatch();
 
   const columns = [
@@ -107,11 +115,13 @@ const JavascriptTable = () => {
         //     </OverlayTrigger>
         //   ) : (
         //     <span style={{ fontSize: "22px" }}>{row.answer || "-"}</span>
-  
+
         //   ),
-        <span className="text-capitalize " style={{ fontSize: "18px" }}>
-          {row.answer}
-        </span>
+        <span
+          className="text-capitalize "
+          style={{ fontSize: "18px", padding: "5px", lineHeight: "20px" }}
+          dangerouslySetInnerHTML={{ __html: row.answer }}
+        ></span>
       ),
     },
     {
@@ -145,7 +155,7 @@ const JavascriptTable = () => {
               //     dispatch(selectDesignation(row))
               //     setDeleteModal(true)
               //   }}
-              onClick={()=>handleOpenDeleteForm(row)}
+              onClick={() => handleOpenDeleteForm(row)}
             >
               <Trash2 className="font-medium-2 btn_delete" />
             </Button>
@@ -156,46 +166,50 @@ const JavascriptTable = () => {
     },
   ];
 
-  console.log('jsQtn', jsQtnList)
+  console.log("jsQtn", jsQtnList);
 
   const dataToRender = () => {
     return jsQtnList;
   };
 
   const handleDelete = (payload) => {
-    dispatch(deleteJsQtn(payload))
-    dispatch(setOpenDeleteForm(false))
-  }
+    dispatch(deleteJsQtn(payload));
+    dispatch(setOpenDeleteForm(false));
+    dispatch(setSelecetd(null));
+  };
 
   const deleteConfig = {
     deleteFunction: handleDelete,
     payload: {
-      id:selected?.id
-    }
-  }
-  
+      id: selected?.id,
+    },
+  };
+
   const handleAdd = () => {
-    dispatch(setOpenForm(true)) 
-   };
+    dispatch(setOpenForm(true));
+  };
 
   const handleOpenEditForm = (row) => {
-    dispatch(setSelecetd(row))
-   dispatch(setOpenForm(true))
-  }
+    dispatch(setSelecetd(row));
+    dispatch(setOpenForm(true));
+  };
 
   const handleOpenDeleteForm = (row) => {
-    dispatch(setSelecetd(row))
-    dispatch(setOpenDeleteForm(true))
-  }
+    dispatch(setSelecetd(row));
+    dispatch(setOpenDeleteForm(true));
+  };
 
   useEffect(() => {
-    dispatch(fetchJsQtnList());
-  }, []);
+    const payload = {
+      search: search,
+    };
+    dispatch(fetchJsQtnList(payload));
+  }, [search]);
 
   return (
     <div className="adminContainer">
       {openForm && <AddForm setOpenForm={setOpenForm} />}
-      {openDeleteForm && <DeleteForm {...deleteConfig}/>}
+      {openDeleteForm && <DeleteForm {...deleteConfig} />}
       <AdminHeader
         title="Javascript Data Table"
         setSearch={setSearch}

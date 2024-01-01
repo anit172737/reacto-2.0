@@ -2,12 +2,17 @@ const express = require("express");
 const router = express.Router();
 const Questions = require("../../../models/javascriptModel");
 
-
 //fetch questions
-router.get("/questionjs", async (req, res) => {
+router.get("/questionjs/:question", async (req, res) => {
   try {
-    
-    const questions = await Questions.find({}, { _id: 0 });
+    console.log("re", req?.params.question);
+    const searchQuestion = parseInt(req?.params?.question);
+    const questions = await Questions.find(
+      {
+        "$or": [{ question : {$regex: req?.params?.question} }],
+      },
+      // { _id: 0 }
+    );
     return res.json({
       data: questions,
       message: "Questions fetch successfully",
@@ -17,7 +22,6 @@ router.get("/questionjs", async (req, res) => {
     return res.json({ error: error.message, status: 500 });
   }
 });
-
 
 //create new question
 router.post("/questionjs", async (req, res) => {
@@ -33,13 +37,12 @@ router.post("/questionjs", async (req, res) => {
   }
 });
 
-
 //update question by id
 router.put("/questionjs/:id", async (req, res) => {
   try {
     const itemId = parseInt(req.params.id);
-    const data = req.body
-    await Questions.updateOne({id:itemId}, {$set:data}, {new:true})
+    const data = req.body;
+    await Questions.updateOne({ id: itemId }, { $set: data }, { new: true });
     res.json({
       status: 200,
       message: "Question updated successfully",
@@ -52,7 +55,7 @@ router.put("/questionjs/:id", async (req, res) => {
 //delete question by id
 router.delete("/questionjs/:id", async (req, res) => {
   try {
-    await Questions.deleteOne({id:req.params.id});
+    await Questions.deleteOne({ id: req.params.id });
     res.json({
       status: 204,
       message: "Question deleted successfully",

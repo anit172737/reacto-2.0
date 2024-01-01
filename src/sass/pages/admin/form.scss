@@ -16,15 +16,15 @@
 
   &__content {
     height: min-content;
-    // width: 500px;
     background-color: white;
     border-radius: 20px;
     justify-items: center;
-    padding: 0px 40px 30px;
+    padding: 30px;
     z-index: 10000;
 
     &--padding {
-      padding-top: 20px !important;
+      display: grid;
+      gap: 20px;
       width: 400px !important;
     }
 
@@ -32,14 +32,16 @@
       display: grid;
       // grid-auto-flow: column;
       color: $color-primary-dark;
-      justify-content: center;
+      justify-items: center;
       h3 {
         margin: 0px;
         line-height: 18px;
-        padding-top: 15px !important;
       }
       small {
-        padding-bottom: 10px;
+        border-radius: 7px;
+        padding: 0px 10px;
+        line-height: 26px;
+        color: rgb(121, 121, 121);
       }
       &-h2 {
         color: $color-primary-dark;
@@ -49,6 +51,12 @@
     &--body {
       display: grid;
       gap: 20px;
+      overflow: auto;
+      height: 62vh;
+      background-color: $color-primary-light;
+      border-radius: 10px;
+      padding: 10px;
+      // box-shadow: 0px 2px 3px gray;
     }
 
     &--input {
@@ -58,7 +66,6 @@
       &-1 {
         height: 45px;
         max-width: 450px;
-        width: 400px;
         min-height: 45px;
         border: 2px solid $color-primary-light-1;
         padding: 0px 10px;
@@ -71,6 +78,11 @@
         color: $color-primary-dark;
         font-weight: 600;
         line-height: 21px;
+      }
+
+      &-editor {
+        max-width: 450px !important;
+        height: 250px !important;
       }
     }
 
@@ -98,6 +110,13 @@
           color: $color-primary;
         }
       }
+      &-delete {
+        padding-top: 0px !important;
+      }
     }
   }
+}
+
+.tox-tinymce {
+  width: 450px !important;
 }

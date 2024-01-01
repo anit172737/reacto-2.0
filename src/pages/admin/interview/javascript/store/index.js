@@ -8,7 +8,10 @@ export const fetchJsQtnList = createAsyncThunk(
   "javascriptMaster",
   async (params, { dispatch }) => {
     try {
-      const response = await axios.get(baseUrl + JavascriptFetch);
+      console.log("params.search", params.search);
+      const response = await axios.get(
+        baseUrl + JavascriptFetch + `/${params?.search}`
+      );
       return {
         jsQtnList: response.data.data,
       };
@@ -22,13 +25,17 @@ export const addJsQtn = createAsyncThunk(
   "javascriptMaster",
   async (params, { dispatch }) => {
     try {
-      
-      await axios.post(baseUrl + JavascriptFetch, params)
-      toast.success('Question added successfully')
-      dispatch(fetchJsQtnList())
-      return true
+      await axios
+        .post(baseUrl + JavascriptFetch, params)
+        .then((res) =>
+          res.data.error
+            ? toast.error(res.data.error)
+            : toast.success(res.data.message)
+        );
+      dispatch(fetchJsQtnList());
+      return true;
     } catch (error) {
-      toast.error(error?.response?.data?.message);
+      toast.error(error?.response?.error);
     }
   }
 );
@@ -37,9 +44,15 @@ export const editJsQtn = createAsyncThunk(
   "javascriptMaster",
   async (params, { dispatch }) => {
     try {
-      await axios.put(baseUrl + JavascriptFetch + `/${params.id}`, params).then(res=>res.data.error ? toast.error(res.data.error): toast.success(res.data.message))
-      dispatch(fetchJsQtnList())
-      return true
+      await axios
+        .put(baseUrl + JavascriptFetch + `/${params.id}`, params)
+        .then((res) =>
+          res.data.error
+            ? toast.error(res.data.error)
+            : toast.success(res.data.message)
+        );
+      dispatch(fetchJsQtnList());
+      return true;
     } catch (error) {
       toast.error(error?.response?.data?.error);
     }
@@ -47,17 +60,23 @@ export const editJsQtn = createAsyncThunk(
 );
 
 export const deleteJsQtn = createAsyncThunk(
-  'javascriptMaster',
+  "javascriptMaster",
   async (params, { dispatch }) => {
     try {
-      await axios.delete(baseUrl + JavascriptFetch + `/${params.id}`).then(res =>res.data.error?  toast.error(res.data.error): toast.success(res.data.message))
-      dispatch(fetchJsQtnList())
-      return true
+      await axios
+        .delete(baseUrl + JavascriptFetch + `/${params.id}`)
+        .then((res) =>
+          res.data.error
+            ? toast.error(res.data.error)
+            : toast.success(res.data.message)
+        );
+      dispatch(fetchJsQtnList());
+      return true;
     } catch (error) {
-      toast.error(error?.response?.data?.error)
+      toast.error(error?.response?.data?.error);
     }
   }
-)
+);
 
 const javascriptMaster = createSlice({
   name: "javascriptMaster",
@@ -66,29 +85,30 @@ const javascriptMaster = createSlice({
     search: "",
     selected: null,
     openForm: false,
-    openDeleteForm:false
+    openDeleteForm: false,
   },
   reducers: {
     setSearch: (state, action) => {
       state.search = action.payload;
     },
     setSelecetd: (state, action) => {
-      state.selected = action.payload
+      state.selected = action.payload;
     },
     setOpenForm: (state, action) => {
-      state.openForm = action.payload
+      state.openForm = action.payload;
     },
     setOpenDeleteForm: (state, action) => {
-      state.openDeleteForm = action.payload
+      state.openDeleteForm = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchJsQtnList.fulfilled, (state, action) => {
-      state.jsQtnList = action.payload.jsQtnList;
-    })
+      state.jsQtnList = action?.payload?.jsQtnList;
+    });
   },
 });
 
-export const { setSearch, setSelecetd, setOpenForm, setOpenDeleteForm } = javascriptMaster.actions;
+export const { setSearch, setSelecetd, setOpenForm, setOpenDeleteForm } =
+  javascriptMaster.actions;
 
 export default javascriptMaster.reducer;
