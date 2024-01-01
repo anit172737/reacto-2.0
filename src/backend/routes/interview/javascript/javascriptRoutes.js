@@ -3,16 +3,11 @@ const router = express.Router();
 const Questions = require("../../../models/javascriptModel");
 
 //fetch questions
-router.get("/questionjs/:question", async (req, res) => {
+router.get("/questionjs", async (req, res) => {
   try {
-    console.log("re", req?.params.question);
+    // console.log("re", req?.params.question);
     const searchQuestion = parseInt(req?.params?.question);
-    const questions = await Questions.find(
-      {
-        "$or": [{ question : {$regex: req?.params?.question} }],
-      },
-      // { _id: 0 }
-    );
+    const questions = await Questions.find({}, { _id: 0 });
     return res.json({
       data: questions,
       message: "Questions fetch successfully",
