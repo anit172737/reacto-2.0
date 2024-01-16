@@ -8,8 +8,10 @@ export const fetchJsQtnList = createAsyncThunk(
   "javascriptMaster",
   async (params, { dispatch }) => {
     try {
-      // console.log("params.search", params.search);
-      const response = await axios.get(baseUrl + JavascriptFetch);
+      console.log("params.search", params.search);
+      const response = await axios.get(
+        baseUrl + JavascriptFetch + `?search=${params.search}`
+      );
       return {
         jsQtnList: response.data.data,
       };

@@ -6,8 +6,13 @@ const Questions = require("../../../models/javascriptModel");
 router.get("/questionjs", async (req, res) => {
   try {
     // console.log("re", req?.params.question);
+    const { search } = req?.query;
+    console.log("search", search);
     const searchQuestion = parseInt(req?.params?.question);
-    const questions = await Questions.find({}, { _id: 0 });
+    const questions = await Questions.find(
+      search !== "" ? { $text: { $search: search } } : {},
+      { _id: 0 }
+    );
     return res.json({
       data: questions,
       message: "Questions fetch successfully",
