@@ -38,9 +38,9 @@
         justify-self: end;
         color: white;
 
-        &:hover {
-          background-color: $color-primary-light-3;
-        }
+        // &:hover {
+        // background-color: $color-primary-light-3;
+        // }
 
         &:hover &-speak {
           transform: scale(1.2);

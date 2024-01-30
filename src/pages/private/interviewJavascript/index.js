@@ -24,7 +24,7 @@ const InterviewJavascript = () => {
   // Example with full conf
   speech.init({
     volume: 1,
-    lang: "en-IN",
+    lang: "en-GB",
     rate: 1,
     pitch: 1,
     voice: "Google UK English Female",
