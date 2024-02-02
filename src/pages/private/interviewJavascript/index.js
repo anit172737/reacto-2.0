@@ -130,7 +130,8 @@ const InterviewJavascript = () => {
   // }, [search, speaking]);
 
   useEffect(() => {
-    dispatch(fetchJsQtnList());
+    const payload = {search:search}
+    dispatch(fetchJsQtnList(payload));
     if (jsQtnList) {
       Menu = jsQtnList.map((e) => {
         return {
@@ -140,9 +141,8 @@ const InterviewJavascript = () => {
       });
     }
     setSearchMenu(Menu);
-  }, []);
+  }, [search]);
 
-  console.log("searchMenu", searchMenu);
   return (
     <div className="interviewQ">
       <Header title="Javascript Interview Questions" setSearch={setSearch} />

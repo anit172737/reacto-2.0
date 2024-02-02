@@ -166,7 +166,6 @@ const JavascriptTable = () => {
     },
   ];
 
-  console.log("jsQtn", jsQtnList);
 
   const dataToRender = () => {
     return jsQtnList;
@@ -208,7 +207,7 @@ const JavascriptTable = () => {
 
   return (
     <div className="adminContainer">
-      {openForm && <AddForm setOpenForm={setOpenForm} />}
+      {openForm && <AddForm Search={search}/>}
       {openDeleteForm && <DeleteForm {...deleteConfig} />}
       <AdminHeader
         title="Javascript Data Table"

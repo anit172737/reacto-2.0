@@ -9,7 +9,7 @@ export const fetchJsQtnList = createAsyncThunk(
   async (params, { dispatch }) => {
     try {
       // console.log("params.search", params.search);
-      const response = await axios.get(baseUrl + JavascriptFetch);
+      const response = await axios.get(baseUrl + JavascriptFetch + `?search=${params.search}`);
       return {
         jsQtnList: response.data.data,
       };
@@ -41,15 +41,23 @@ export const addJsQtn = createAsyncThunk(
 export const editJsQtn = createAsyncThunk(
   "javascriptMaster",
   async (params, { dispatch }) => {
+   console.log('params', params)
+    const payload = {id: params.id,
+      question: params.question,
+      answer: params.answer,
+    }
+    const searchParam = {
+      search:params.Search
+    }
     try {
       await axios
-        .put(baseUrl + JavascriptFetch + `/${params.id}`, params)
+        .put(baseUrl + JavascriptFetch + `/${payload.id}`, payload)
         .then((res) =>
           res.data.error
             ? toast.error(res.data.error)
             : toast.success(res.data.message)
         );
-      dispatch(fetchJsQtnList());
+      dispatch(fetchJsQtnList(searchParam));
       return true;
     } catch (error) {
       toast.error(error?.response?.data?.error);

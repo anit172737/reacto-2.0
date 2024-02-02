@@ -21,10 +21,10 @@ const defaultValues = {
   question: "",
   answer: "",
 };
-const AddForm = () => {
+const AddForm = ({ Search }) => {
+  console.log('search>>>>', Search)
   const { selected } = useSelector((state) => state.javascriptMaster);
   const [sub, setSubmit] = useState(false);
-  // console.log("selected", selected);
   const dispatch = useDispatch();
   const {
     reset,
@@ -48,25 +48,20 @@ const AddForm = () => {
   const handleEditorChange = (e) => {
     // setValue("answer", e.level.content);
     // setSubmit(false);
-    console.log("sub", e);
   };
 
   const handleRemoveEditorError = (e) => {
     if (e) {
       setSubmit(false);
       setValue("answer", e);
-      console.log("first");
     } else {
       setSubmit(true);
       setValue("answer", e);
-      console.log("new");
     }
   };
 
-  console.log("sub", sub);
-
   const onSubmit = async (data) => {
-    console.log("data", data);
+    // console.log("data", data);
 
     let response = "";
 
@@ -80,6 +75,7 @@ const AddForm = () => {
           id: selected.id,
           question: data.question,
           answer: data.answer,
+          Search
         };
 
         response = await dispatch(editJsQtn(modify));
@@ -165,7 +161,7 @@ const AddForm = () => {
                     apiKey="ft4u5opuf9nmnna342rx6cpg1n959nwska3vifnnxrwprg4v"
                     value={answerWatcher ? answerWatcher : ""}
                     init={textEditorInit}
-                    onChange={(e) => handleEditorChange(e)}
+                    // onChange={(e) => handleEditorChange(e)}
                     onEditorChange={(e) => handleRemoveEditorError(e)}
                   />
                 )}
