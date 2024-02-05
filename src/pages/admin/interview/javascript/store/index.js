@@ -9,9 +9,10 @@ export const fetchJsQtnList = createAsyncThunk(
   async (params, { dispatch }) => {
     try {
       // console.log("params.search", params.search);
-      const response = await axios.get(baseUrl + JavascriptFetch + `?search=${params.search}`);
+      const response = await axios.get(baseUrl + JavascriptFetch + `?search=${params.search}&pageSize=10&pageNumber=2`);
       return {
-        jsQtnList: response.data.data,
+        jsQtnList: response.data.data.questions,
+        total:response.data.data.total,
       };
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -88,6 +89,7 @@ const javascriptMaster = createSlice({
   name: "javascriptMaster",
   initialState: {
     jsQtnList: [],
+    total:null,
     search: "",
     selected: null,
     openForm: false,
@@ -110,6 +112,7 @@ const javascriptMaster = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchJsQtnList.fulfilled, (state, action) => {
       state.jsQtnList = action?.payload?.jsQtnList;
+      state.total=action?.payload?.total
     });
   },
 });

@@ -20,6 +20,8 @@ import { Edit, Trash2 } from "react-feather";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import "../../../../sass/pages/admin/columns.scss";
 import DeleteForm from "../../../../components/deleteForm";
+import CustomPagination from "../../../../components/customPagination";
+
 
 createTheme(
   "solarized",
@@ -72,11 +74,11 @@ const customStyles = {
 
 const JavascriptTable = () => {
   const [search, setSearch] = useState("");
-  const { jsQtnList, openForm, openDeleteForm, selected } = useSelector(
+  const [currentPage, setCurrentPage] = useState(1);
+  const { jsQtnList, openForm, openDeleteForm, selected, total } = useSelector(
     (state) => state.javascriptMaster
   );
   const dispatch = useDispatch();
-
   const columns = [
     {
       name: "QUESTION",
@@ -184,6 +186,22 @@ const JavascriptTable = () => {
     },
   };
 
+  let pageSize = 10
+  let totalPages = total/10
+
+  const renderPaginationComponent = () => {
+    return (
+      <CustomPagination
+        className="pagination-bar"
+        currentPage={currentPage}
+        totalCount={total}
+        pageSize={pageSize}
+        onPageChange={page => setCurrentPage(page)}
+      />
+
+    )
+    // return 'anit'
+  }
   const handleAdd = () => {
     dispatch(setOpenForm(true));
   };
@@ -199,6 +217,7 @@ const JavascriptTable = () => {
   };
 
   useEffect(() => {
+    window.top.document.title='javascript'
     const payload = {
       search: search,
     };
@@ -226,7 +245,7 @@ const JavascriptTable = () => {
         data={dataToRender()}
         sortIcon={<ChevronDown />}
         className="react-dataTable"
-        //   paginationComponent={renderPaginationComponent}
+          paginationComponent={renderPaginationComponent}
         // theme="solarized"
         customStyles={customStyles}
       />

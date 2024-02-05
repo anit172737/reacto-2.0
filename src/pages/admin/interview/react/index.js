@@ -17,6 +17,7 @@ const ReactTable = () => {
   };
 
   useEffect(() => {
+    window.top.document.title='react'
     fetchData();
   }, []);
 

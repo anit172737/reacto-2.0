@@ -5,13 +5,18 @@ const Questions = require("../../../models/javascriptModel");
 //fetch questions
 router.get("/questionjs", async (req, res) => {
   try {
-    // console.log("re", req?.params.question);
-    const { search } = req?.query;
-    console.log("search", search);
-    // const searchQuestion = parseInt(req?.params?.question);
-    const questions = await Questions.find( { question: { $regex: search, $options: 'i' } },{ _id: 0 });
+    console.log("pageSize", req?.query.pageSize);
+    const { search,pageSize, pageNumber } = req?.query; 
+  
+    // Calculate the skip and limit values
+    const skip = (pageNumber - 1) * pageSize;
+    const limit = pageSize;
+
+    const questions = await Questions.find({ question: { $regex: search, $options: 'i' } }, { _id: 0 }).skip(skip).limit(limit);
+    const questionsAll = await Questions.find( { question: { $regex: search, $options: 'i' } },{ _id: 0 })
     return res.json({
-      data: questions,
+      data: {questions,count: questions.length,
+        total:questionsAll.length,},
       message: "Questions fetch successfully",
       status: 201,
     });
