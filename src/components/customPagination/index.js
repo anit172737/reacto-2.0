@@ -12,6 +12,7 @@ const CustomPagination = (props) => {
     currentPage,
     pageSize,
     className,
+    handlePageSizeChange,
   } = props;
 
   const paginationRange = usePagination({
@@ -32,7 +33,8 @@ const CustomPagination = (props) => {
   const onPrevious = () => {
     onPageChange(currentPage - 1);
   };
-
+  console.log("pageSize", pageSize);
+  console.log("totalCount", totalCount);
   let lastPage = paginationRange[paginationRange.length - 1];
   return (
     <div className="content">
@@ -42,10 +44,12 @@ const CustomPagination = (props) => {
           //   type="select"
           id="rows-per-page"
           value={pageSize}
-          //   onChange={(e) => handlePageSizeChange(e)}
+          onChange={(e) => handlePageSizeChange(e)}
           style={{ width: "5rem" }}
         >
+          <option value="5">5</option>
           <option value="10">10</option>
+          <option value="20">20</option>
           {totalCount >= 25 ? (
             <option value="25">25</option>
           ) : (
@@ -53,7 +57,7 @@ const CustomPagination = (props) => {
             (totalCount > 25 && <option value="50">50</option>)
           )}
 
-          <option value="All">All</option>
+          {/* <option value={`${totalCount}`}>All</option> */}
         </select>
         &nbsp;/&nbsp;<label>{totalCount}</label>&nbsp;&nbsp;
         <label htmlFor="rows-per-page">Entries</label>

@@ -8,11 +8,14 @@ export const fetchJsQtnList = createAsyncThunk(
   "javascriptMaster",
   async (params, { dispatch }) => {
     try {
-      // console.log("params.search", params.search);
-      const response = await axios.get(baseUrl + JavascriptFetch + `?search=${params.search}&pageSize=10&pageNumber=2`);
+      const response = await axios.get(
+        baseUrl +
+          JavascriptFetch +
+          `?search=${params?.search}&pageSize=${params?.pageSize}&pageNumber=${params?.pageNumber}`
+      );
       return {
         jsQtnList: response.data.data.questions,
-        total:response.data.data.total,
+        total: response.data.data.total,
       };
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -25,13 +28,13 @@ export const addJsQtn = createAsyncThunk(
   async (params, { dispatch }) => {
     try {
       await axios
-        .post(baseUrl + JavascriptFetch, params)
+        .post(baseUrl + JavascriptFetch, params.data)
         .then((res) =>
           res.data.error
             ? toast.error(res.data.error)
             : toast.success(res.data.message)
         );
-      dispatch(fetchJsQtnList());
+      dispatch(fetchJsQtnList({ ...params }));
       return true;
     } catch (error) {
       toast.error(error?.response?.error);
@@ -42,23 +45,16 @@ export const addJsQtn = createAsyncThunk(
 export const editJsQtn = createAsyncThunk(
   "javascriptMaster",
   async (params, { dispatch }) => {
-   console.log('params', params)
-    const payload = {id: params.id,
-      question: params.question,
-      answer: params.answer,
-    }
-    const searchParam = {
-      search:params.Search
-    }
+    console.log("params", params);
     try {
       await axios
-        .put(baseUrl + JavascriptFetch + `/${payload.id}`, payload)
+        .put(baseUrl + JavascriptFetch + `/${params?.data?.id}`, params?.data)
         .then((res) =>
           res.data.error
             ? toast.error(res.data.error)
             : toast.success(res.data.message)
         );
-      dispatch(fetchJsQtnList(searchParam));
+      dispatch(fetchJsQtnList({ ...params }));
       return true;
     } catch (error) {
       toast.error(error?.response?.data?.error);
@@ -77,7 +73,7 @@ export const deleteJsQtn = createAsyncThunk(
             ? toast.error(res.data.error)
             : toast.success(res.data.message)
         );
-      dispatch(fetchJsQtnList());
+      dispatch(fetchJsQtnList({ ...params }));
       return true;
     } catch (error) {
       toast.error(error?.response?.data?.error);
@@ -89,7 +85,7 @@ const javascriptMaster = createSlice({
   name: "javascriptMaster",
   initialState: {
     jsQtnList: [],
-    total:null,
+    total: null,
     search: "",
     selected: null,
     openForm: false,
@@ -112,7 +108,7 @@ const javascriptMaster = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchJsQtnList.fulfilled, (state, action) => {
       state.jsQtnList = action?.payload?.jsQtnList;
-      state.total=action?.payload?.total
+      state.total = action?.payload?.total;
     });
   },
 });

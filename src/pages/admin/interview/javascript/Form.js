@@ -21,8 +21,7 @@ const defaultValues = {
   question: "",
   answer: "",
 };
-const AddForm = ({ Search }) => {
-  console.log('search>>>>', Search)
+const AddForm = ({ search, pageNumber, pageSize }) => {
   const { selected } = useSelector((state) => state.javascriptMaster);
   const [sub, setSubmit] = useState(false);
   const dispatch = useDispatch();
@@ -72,16 +71,26 @@ const AddForm = ({ Search }) => {
     ) {
       if (selected) {
         const modify = {
-          id: selected.id,
-          question: data.question,
-          answer: data.answer,
-          Search
+          data: {
+            id: selected.id,
+            question: data.question,
+            answer: data.answer,
+          },
+          search,
+          pageSize,
+          pageNumber,
         };
 
         response = await dispatch(editJsQtn(modify));
       } else {
         // await dispatch(setLoader(true));
-        response = await dispatch(addJsQtn(data));
+        const payload = {
+          data: { ...data },
+          search,
+          pageSize,
+          pageNumber,
+        };
+        response = await dispatch(addJsQtn(payload));
       }
     } else {
       setValue("answer", "");

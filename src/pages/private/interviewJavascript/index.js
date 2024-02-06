@@ -7,16 +7,22 @@ import { PlayCircle, PauseCircle } from "react-feather";
 import Speech from "speak-tts";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchJsQtnList } from "../../admin/interview/javascript/store";
+import CustomPagination from "../../../components/customPagination";
 
 const InterviewJavascript = () => {
-  const { jsQtnList } = useSelector((state) => state.javascriptMaster);
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const { jsQtnList, openForm, openDeleteForm, selected, total } = useSelector(
+    (state) => state.javascriptMaster
+  );
   const [speaking, setSpeaking] = useState(false);
   const [pause, setPause] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  let Menu;
-  const [searchMenu, setSearchMenu] = useState(Menu);
+  // let Menu;
+  // let searchMenu = jsQtnList;
+  const [searchMenu, setSearchMenu] = useState();
   const dispatch = useDispatch();
 
   const speech = new Speech(); // will throw an exception if not browser supported
@@ -31,8 +37,16 @@ const InterviewJavascript = () => {
     splitSentences: true,
   });
 
-  const handlePause = (text) => {
-    for (let i = 0; i < searchMenu.length; i++) {
+  const handlePause = async (text) => {
+    await setSearchMenu(
+      jsQtnList.map((e) => {
+        return {
+          ...e,
+          pause: false,
+        };
+      })
+    );
+    for (let i = 0; i < searchMenu?.length; i++) {
       if (searchMenu[i].answer === text) {
         setLoading(false);
         searchMenu[i].loading = false;
@@ -50,8 +64,9 @@ const InterviewJavascript = () => {
     }
   };
 
-  const handleResume = (text) => {
-    for (let i = 0; i < searchMenu.length; i++) {
+  const handleResume = async (text) => {
+    await setSearchMenu(jsQtnList);
+    for (let i = 0; i < searchMenu?.length; i++) {
       if (searchMenu[i].answer === text) {
         setLoading(false);
         searchMenu[i].loading = false;
@@ -69,8 +84,9 @@ const InterviewJavascript = () => {
     }
   };
 
-  const handleSpeech = (text) => {
-    for (let i = 0; i < searchMenu.length; i++) {
+  const handleSpeech = async (text) => {
+    await setSearchMenu(jsQtnList);
+    for (let i = 0; i < searchMenu?.length; i++) {
       if (searchMenu[i].answer === text) {
         let voice = text.replace(/<p>|<\/p>|<ul>|<\/ul>|<li>|<\/li>/g, "");
         setLoading(true);
@@ -124,30 +140,36 @@ const InterviewJavascript = () => {
     }
   };
 
+  const handlePageSizeChange = (e) => {
+    setPageSize(e.target.value);
+  };
   // useEffect(() => {
   //   searchFunction(search, jsQtnList, setSearchMenu);
   //   console.log("loading", loading);
   // }, [search, speaking]);
 
   useEffect(() => {
-    const payload = {search:search}
+    const payload = { search, pageSize, pageNumber: currentPage };
     dispatch(fetchJsQtnList(payload));
-    if (jsQtnList) {
-      Menu = jsQtnList.map((e) => {
-        return {
-          ...e,
-          pause: false,
-        };
-      });
-    }
-    setSearchMenu(Menu);
-  }, [search]);
+    // if (jsQtnList) {
+    //   Menu = jsQtnList.map((e) => {
+    //     return {
+    //       ...e,
+    //       pause: false,
+    //     };
+    //   });
+    // }
+    // setSearchMenu(Menu);
+  }, [search, pageSize, currentPage]);
+
+  console.log("searchMenu", searchMenu);
+  console.log("jsQtnList", jsQtnList);
 
   return (
     <div className="interviewQ">
       <Header title="Javascript Interview Questions" setSearch={setSearch} />
-      {searchMenu?.length !== 0 ? (
-        searchMenu?.map((qtn) => {
+      {jsQtnList?.length !== 0 ? (
+        jsQtnList?.map((qtn) => {
           return (
             <div className="interviewQ_sec">
               <div className="interviewQ_sec-1">
@@ -198,6 +220,14 @@ const InterviewJavascript = () => {
           No data found
         </div>
       )}
+      <CustomPagination
+        className="pagination-bar"
+        currentPage={currentPage}
+        totalCount={total}
+        pageSize={pageSize}
+        onPageChange={(page) => setCurrentPage(page)}
+        handlePageSizeChange={handlePageSizeChange}
+      />
     </div>
   );
 };

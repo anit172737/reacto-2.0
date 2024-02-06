@@ -22,7 +22,6 @@ import "../../../../sass/pages/admin/columns.scss";
 import DeleteForm from "../../../../components/deleteForm";
 import CustomPagination from "../../../../components/customPagination";
 
-
 createTheme(
   "solarized",
   {
@@ -75,6 +74,7 @@ const customStyles = {
 const JavascriptTable = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const { jsQtnList, openForm, openDeleteForm, selected, total } = useSelector(
     (state) => state.javascriptMaster
   );
@@ -152,11 +152,6 @@ const JavascriptTable = () => {
               size={20}
               color="transparent"
               className="btn"
-              //   onClick={() => {
-              //     setSelectedRows([row])
-              //     dispatch(selectDesignation(row))
-              //     setDeleteModal(true)
-              //   }}
               onClick={() => handleOpenDeleteForm(row)}
             >
               <Trash2 className="font-medium-2 btn_delete" />
@@ -167,7 +162,6 @@ const JavascriptTable = () => {
       },
     },
   ];
-
 
   const dataToRender = () => {
     return jsQtnList;
@@ -183,11 +177,15 @@ const JavascriptTable = () => {
     deleteFunction: handleDelete,
     payload: {
       id: selected?.id,
+      search,
+      pageSize,
+      pageNumber: currentPage,
     },
   };
 
-  let pageSize = 10
-  let totalPages = total/10
+  const handlePageSizeChange = (e) => {
+    setPageSize(e.target.value);
+  };
 
   const renderPaginationComponent = () => {
     return (
@@ -196,12 +194,11 @@ const JavascriptTable = () => {
         currentPage={currentPage}
         totalCount={total}
         pageSize={pageSize}
-        onPageChange={page => setCurrentPage(page)}
+        onPageChange={(page) => setCurrentPage(page)}
+        handlePageSizeChange={handlePageSizeChange}
       />
-
-    )
-    // return 'anit'
-  }
+    );
+  };
   const handleAdd = () => {
     dispatch(setOpenForm(true));
   };
@@ -217,16 +214,20 @@ const JavascriptTable = () => {
   };
 
   useEffect(() => {
-    window.top.document.title='javascript'
+    window.top.document.title = "javascript";
     const payload = {
       search: search,
+      pageSize,
+      pageNumber: currentPage,
     };
     dispatch(fetchJsQtnList(payload));
-  }, [search]);
+  }, [search, pageSize, currentPage]);
 
   return (
     <div className="adminContainer">
-      {openForm && <AddForm Search={search}/>}
+      {openForm && (
+        <AddForm search={search} pageSize={pageSize} pageNumber={currentPage} />
+      )}
       {openDeleteForm && <DeleteForm {...deleteConfig} />}
       <AdminHeader
         title="Javascript Data Table"
@@ -245,7 +246,7 @@ const JavascriptTable = () => {
         data={dataToRender()}
         sortIcon={<ChevronDown />}
         className="react-dataTable"
-          paginationComponent={renderPaginationComponent}
+        paginationComponent={renderPaginationComponent}
         // theme="solarized"
         customStyles={customStyles}
       />
