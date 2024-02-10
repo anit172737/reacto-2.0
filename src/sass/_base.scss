@@ -47,6 +47,9 @@ body {
   font-family: myFont;
   font-size: 2.5rem;
   color: $color-primary;
+  @media only screen and (min-width: 1300px) {
+    font-size: 1rem;
+  }
 }
 
 // h1 {

@@ -20,8 +20,6 @@ const InterviewJavascript = () => {
   const [pause, setPause] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // let Menu;
-  // let searchMenu = jsQtnList;
   const [searchMenu, setSearchMenu] = useState();
   const dispatch = useDispatch();
 
@@ -37,15 +35,7 @@ const InterviewJavascript = () => {
     splitSentences: true,
   });
 
-  const handlePause = async (text) => {
-    await setSearchMenu(
-      jsQtnList.map((e) => {
-        return {
-          ...e,
-          pause: false,
-        };
-      })
-    );
+  const handlePause = (text) => {
     for (let i = 0; i < searchMenu?.length; i++) {
       if (searchMenu[i].answer === text) {
         setLoading(false);
@@ -64,8 +54,7 @@ const InterviewJavascript = () => {
     }
   };
 
-  const handleResume = async (text) => {
-    await setSearchMenu(jsQtnList);
+  const handleResume = (text) => {
     for (let i = 0; i < searchMenu?.length; i++) {
       if (searchMenu[i].answer === text) {
         setLoading(false);
@@ -84,11 +73,16 @@ const InterviewJavascript = () => {
     }
   };
 
-  const handleSpeech = async (text) => {
-    await setSearchMenu(jsQtnList);
+  const handleSpeech = (text) => {
     for (let i = 0; i < searchMenu?.length; i++) {
+      if (searchMenu[i].pause === true) {
+        searchMenu[i].pause = false;
+      }
       if (searchMenu[i].answer === text) {
-        let voice = text.replace(/<p>|<\/p>|<ul>|<\/ul>|<li>|<\/li>/g, "");
+        let voice = text.replace(
+          /<p>|<\/p>|<ul>|<\/ul>|<li>|<\/li>|<strong>|<\/strong>/g,
+          ""
+        );
         setLoading(true);
         searchMenu[i].loading = true;
         speech
@@ -103,6 +97,7 @@ const InterviewJavascript = () => {
                 searchMenu[i].speaking = true;
                 setSpeaking(true);
                 setLoading(false);
+                setPause(false);
               },
               onend: () => {
                 console.log("End utterance");
@@ -143,33 +138,33 @@ const InterviewJavascript = () => {
   const handlePageSizeChange = (e) => {
     setPageSize(e.target.value);
   };
-  // useEffect(() => {
-  //   searchFunction(search, jsQtnList, setSearchMenu);
-  //   console.log("loading", loading);
-  // }, [search, speaking]);
 
   useEffect(() => {
     const payload = { search, pageSize, pageNumber: currentPage };
     dispatch(fetchJsQtnList(payload));
-    // if (jsQtnList) {
-    //   Menu = jsQtnList.map((e) => {
-    //     return {
-    //       ...e,
-    //       pause: false,
-    //     };
-    //   });
-    // }
-    // setSearchMenu(Menu);
   }, [search, pageSize, currentPage]);
 
+  useEffect(() => {
+    let Menu;
+    if (jsQtnList) {
+      Menu = jsQtnList.map((e) => {
+        return {
+          ...e,
+          pause: false,
+        };
+      });
+    }
+    setSearchMenu(Menu);
+  }, [jsQtnList]);
+
   console.log("searchMenu", searchMenu);
-  console.log("jsQtnList", jsQtnList);
+  console.log("pause", pause);
 
   return (
     <div className="interviewQ">
       <Header title="Javascript Interview Questions" setSearch={setSearch} />
-      {jsQtnList?.length !== 0 ? (
-        jsQtnList?.map((qtn) => {
+      {searchMenu?.length !== 0 ? (
+        searchMenu?.map((qtn) => {
           return (
             <div className="interviewQ_sec">
               <div className="interviewQ_sec-1">
