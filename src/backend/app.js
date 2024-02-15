@@ -4,6 +4,7 @@ const cors = require("cors");
 const userRoutes = require("./routes/users/userRoutes");
 const javascriptRoutes = require("./routes/interview/javascript/javascriptRoutes");
 const reactRoutes = require("./routes/interview/reactjs/reactjsRoutes");
+const upload = require("./middleware/uploader");
 const app = express();
 // const bcryptjs = require("bcryptjs");
 const port = 8000;
@@ -11,6 +12,7 @@ const port = 8000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use("/uploads", express.static("../uploads"));
 
 connect();
 

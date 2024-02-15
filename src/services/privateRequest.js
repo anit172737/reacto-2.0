@@ -12,6 +12,8 @@ privateRequest.interceptors.request.use(
 
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
+      config.headers["Accept"] = "multipart/form-data";
+      config.headers["Content-Type"] = "multipart/form-data";
     }
 
     return config;
@@ -60,7 +62,6 @@ export const privateGet = (endPoint) => {
 };
 
 export const privatePost = (endPoint, data) => {
-  console.log("data", data);
   return privateRequest.post(endPoint, data);
 };
 

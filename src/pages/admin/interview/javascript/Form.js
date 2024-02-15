@@ -14,16 +14,18 @@ import {
 } from "./store";
 import { Editor } from "@tinymce/tinymce-react";
 import { textEditorInit } from "../../../../components/textEditorInit";
-import { Watch } from "react-feather";
+import { Trash, Trash2 } from "react-feather";
 // import { addContact, editContact, selectContact, setLoader } from "./store";
 
 const defaultValues = {
   question: "",
   answer: "",
+  desc: "",
 };
 const AddForm = ({ search, pageNumber, pageSize }) => {
   const { selected } = useSelector((state) => state.javascriptMaster);
   const [sub, setSubmit] = useState(false);
+  const [desc, setDesc] = useState();
   const dispatch = useDispatch();
   const {
     reset,
@@ -59,10 +61,17 @@ const AddForm = ({ search, pageNumber, pageSize }) => {
     }
   };
 
-  const onSubmit = async (data) => {
-    // console.log("data", data);
+  const handleDescChange = (e) => {
+    setValue("desc", e.target.files[0]);
+    setDesc(e.target.files[0]);
+  };
 
+  const onSubmit = async (data) => {
     let response = "";
+    const formData = new FormData();
+    formData.append("question", data?.question);
+    formData.append("answer", data?.answer);
+    formData.append("desc", data?.desc);
 
     if (
       answerWatcher &&
@@ -71,16 +80,12 @@ const AddForm = ({ search, pageNumber, pageSize }) => {
     ) {
       if (selected) {
         const modify = {
-          data: {
-            id: selected.id,
-            question: data.question,
-            answer: data.answer,
-          },
+          data: formData,
+          id: selected.id,
           search,
           pageSize,
           pageNumber,
         };
-
         response = await dispatch(editJsQtn(modify));
       } else {
         // await dispatch(setLoader(true));
@@ -99,12 +104,23 @@ const AddForm = ({ search, pageNumber, pageSize }) => {
     if (response) {
       handleModalClosed();
     }
+    // for (let pair of formData.entries()) {
+    //   console.log("pair[]", pair[0], pair[1]);
+    // }
   };
 
   useEffect(() => {
     if (selected) {
       setValue("question", selected.question);
       setValue("answer", selected.answer);
+
+      let lastIndexOfSlash = selected.desc.lastIndexOf("/");
+      let filename;
+      if (lastIndexOfSlash !== -1) {
+        filename = selected.desc.substring(lastIndexOfSlash + 1);
+      }
+      setValue("desc", selected.desc);
+      setDesc({ name: filename });
     }
   }, []);
 
@@ -180,6 +196,47 @@ const AddForm = ({ search, pageNumber, pageSize }) => {
                   Please Enter Answer
                 </div>
               )}
+            </div>
+            <div className="addModal__content--input">
+              <Label
+                className="form-label addModal__content--input-label"
+                for="question"
+              >
+                Description
+                {/* <span style={{ color: "orangered" }}>*</span> */}
+              </Label>
+              <Controller
+                id="desc"
+                name="desc"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    {desc === "" && desc?.name === undefined ? (
+                      <Input
+                        type="file"
+                        className="addModal__content--input-1"
+                        onChange={handleDescChange}
+                      />
+                    ) : (
+                      <div className="addModal__content--desc">
+                        <Input
+                          className="addModal__content--input-1"
+                          value={desc?.name}
+                        />
+                        <Trash2
+                          className="addModal__content--input-delete"
+                          onClick={() => (
+                            setDesc(""), setValue("desc", "")
+                            // clearErrors("desc"),
+                            // setInvalidLogoSize(false),
+                            // setInvalidFileType(false)
+                          )}
+                        />
+                      </div>
+                    )}
+                  </>
+                )}
+              />
             </div>
           </Col>
 

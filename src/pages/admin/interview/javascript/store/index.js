@@ -2,15 +2,26 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { baseUrl } from "../../../../../app.config";
-import { JavascriptFetch } from "../../../../../services/apiEndpoints";
+import {
+  JavascriptFetch,
+  JavascriptAdd,
+  JavascriptEdit,
+  JavascriptDelete,
+} from "../../../../../services/apiEndpoints";
+import {
+  privateGet,
+  privatePost,
+  privatePut,
+  privateDelete,
+  privatePatch,
+} from "../../../../../services/privateRequest";
 
 export const fetchJsQtnList = createAsyncThunk(
   "javascriptMaster",
   async (params, { dispatch }) => {
     try {
-      const response = await axios.get(
-        baseUrl +
-          JavascriptFetch +
+      const response = await privateGet(
+        JavascriptFetch +
           `?search=${params?.search}&pageSize=${params?.pageSize}&pageNumber=${params?.pageNumber}`
       );
       return {
@@ -26,14 +37,13 @@ export const fetchJsQtnList = createAsyncThunk(
 export const addJsQtn = createAsyncThunk(
   "javascriptMaster",
   async (params, { dispatch }) => {
+    console.log("params.data", params.data);
     try {
-      await axios
-        .post(baseUrl + JavascriptFetch, params.data)
-        .then((res) =>
-          res.data.error
-            ? toast.error(res.data.error)
-            : toast.success(res.data.message)
-        );
+      await privatePost(JavascriptAdd, params.data).then((res) =>
+        res.data.error
+          ? toast.error(res.data.error)
+          : toast.success(res.data.message)
+      );
       dispatch(fetchJsQtnList({ ...params }));
       return true;
     } catch (error) {
@@ -45,15 +55,12 @@ export const addJsQtn = createAsyncThunk(
 export const editJsQtn = createAsyncThunk(
   "javascriptMaster",
   async (params, { dispatch }) => {
-    console.log("params", params);
     try {
-      await axios
-        .put(baseUrl + JavascriptFetch + `/${params?.data?.id}`, params?.data)
-        .then((res) =>
-          res.data.error
-            ? toast.error(res.data.error)
-            : toast.success(res.data.message)
-        );
+      await privatePut(JavascriptEdit, params?.id, params?.data).then((res) =>
+        res.data.error
+          ? toast.error(res.data.error)
+          : toast.success(res.data.message)
+      );
       dispatch(fetchJsQtnList({ ...params }));
       return true;
     } catch (error) {
@@ -66,13 +73,11 @@ export const deleteJsQtn = createAsyncThunk(
   "javascriptMaster",
   async (params, { dispatch }) => {
     try {
-      await axios
-        .delete(baseUrl + JavascriptFetch + `/${params.id}`)
-        .then((res) =>
-          res.data.error
-            ? toast.error(res.data.error)
-            : toast.success(res.data.message)
-        );
+      await privateDelete(JavascriptDelete, params.id).then((res) =>
+        res.data.error
+          ? toast.error(res.data.error)
+          : toast.success(res.data.message)
+      );
       dispatch(fetchJsQtnList({ ...params }));
       return true;
     } catch (error) {

@@ -12,6 +12,9 @@ const interviewSchema = new mongoose.Schema({
     type: String,
     required: [true, "please provide a answer"],
   },
+  desc: {
+    type: String,
+  },
 });
 
 const JavascriptData =

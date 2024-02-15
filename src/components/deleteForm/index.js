@@ -10,7 +10,7 @@ const DeleteForm = ({ deleteFunction, payload }) => {
   };
   return (
     <div className="addModal">
-      <div className="addModal__content addModal__content--padding">
+      <div className="deleteModal__content">
         <div className="addModal__content--header">
           <h3 className="mb-0">Are You Sure ?</h3>
           <small>"You won't revert this!"</small>
