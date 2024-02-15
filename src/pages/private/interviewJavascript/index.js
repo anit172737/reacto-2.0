@@ -204,7 +204,16 @@ const InterviewJavascript = () => {
                 style={{ lineHeight: "30px" }}
                 dangerouslySetInnerHTML={{ __html: qtn?.answer }}
               ></p>
-              {/* <img src=""></img> */}
+              {qtn?.desc && (
+                <img
+                  style={{
+                    height: "200px",
+                    width: "100%",
+                    borderRadius: "10px",
+                  }}
+                  src={qtn?.desc}
+                ></img>
+              )}
             </div>
           );
         })
