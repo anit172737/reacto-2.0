@@ -6,12 +6,12 @@ import Menu from "./sidebarMenu";
 import { LoginContext } from "../../utility/loginContext";
 
 const Sidebar = () => {
-  const { user } = useContext(LoginContext)
-  const googleLogin = localStorage.getItem('googleLogin')
+  const { user } = useContext(LoginContext);
+  const googleLogin = localStorage.getItem("googleLogin");
   const [data, setData] = useState(Menu);
   const [drop, setDrop] = useState(false);
   const navigate = useNavigate();
-  console.log('user', user)
+  console.log("user", user);
 
   const handleLogout = () => {
     console.log("Logout Success!");
@@ -36,13 +36,22 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
+      {/* <div> */}
+      <a
+        href="/home"
+        className="sidebar__nav--navlink sidebar__nav--navlink-title"
+      >
+        ☣ <span style={{ fontSize: "30px" }}>Reacto</span>
+      </a>
+      {/* </div> */}
+
       <div className="sidebar__nav">
-        <NavLink
+        {/* <NavLink
           to="/home"
           className="sidebar__nav--navlink sidebar__nav--navlink-title"
         >
           ☣ <span style={{ fontSize: "30px" }}>Reacto</span>
-        </NavLink>
+        </NavLink> */}
         {data.map((data, index) => {
           return (
             <>
@@ -113,7 +122,6 @@ const Sidebar = () => {
           className="googleLogout"
           onClick={handleLogout}
         />
-        
       </div>
     </div>
   );

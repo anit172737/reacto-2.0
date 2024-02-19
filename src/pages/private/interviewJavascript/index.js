@@ -169,35 +169,38 @@ const InterviewJavascript = () => {
             <div className="interviewQ_sec">
               <div className="interviewQ_sec-1">
                 <h3>{qtn?.question}</h3>
-                <div className="interviewQ_sec-1-speech">
-                  {qtn?.speaking === false && qtn?.pause === false ? (
-                    <PlayCircle
-                      // className="interviewQ_sec-1-speech-speak"
-                      className={`${
-                        qtn?.loading
-                          ? "animate"
-                          : "interviewQ_sec-1-speech-speak"
-                      }`}
-                      onClick={() => handleSpeech(qtn?.answer)}
-                    />
-                  ) : qtn?.speaking === true && qtn?.pause === false ? (
-                    <PauseCircle
-                      className="interviewQ_sec-1-speech-speak"
-                      onClick={() => handlePause(qtn?.answer)}
-                    />
-                  ) : (
-                    <PlayCircle
-                      // className="interviewQ_sec-1-speech-speak"
-                      className={`${
-                        // qtn?.loading
-                        //   ? "animate"
-                        //       :
-                        "interviewQ_sec-1-speech-speak"
-                      }`}
-                      onClick={() => handleResume(qtn?.answer)}
-                    />
-                  )}
-                </div>
+
+                <abbr title="listen answer" style={{ justifySelf: "end" }}>
+                  <div className="interviewQ_sec-1-speech">
+                    {qtn?.speaking === false && qtn?.pause === false ? (
+                      <PlayCircle
+                        // className="interviewQ_sec-1-speech-speak"
+                        className={`${
+                          qtn?.loading
+                            ? "animate"
+                            : "interviewQ_sec-1-speech-speak"
+                        }`}
+                        onClick={() => handleSpeech(qtn?.answer)}
+                      />
+                    ) : qtn?.speaking === true && qtn?.pause === false ? (
+                      <PauseCircle
+                        className="interviewQ_sec-1-speech-speak"
+                        onClick={() => handlePause(qtn?.answer)}
+                      />
+                    ) : (
+                      <PlayCircle
+                        // className="interviewQ_sec-1-speech-speak"
+                        className={`${
+                          // qtn?.loading
+                          //   ? "animate"
+                          //       :
+                          "interviewQ_sec-1-speech-speak"
+                        }`}
+                        onClick={() => handleResume(qtn?.answer)}
+                      />
+                    )}
+                  </div>
+                </abbr>
               </div>
 
               <p
