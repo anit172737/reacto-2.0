@@ -33,7 +33,8 @@ const CustomPagination = (props) => {
   const onPrevious = () => {
     onPageChange(currentPage - 1);
   };
-  let lastPage = paginationRange[paginationRange.length - 1];
+  let lastPage =
+    paginationRange && paginationRange[paginationRange?.length - 1];
   return (
     <div className="content">
       <div>
