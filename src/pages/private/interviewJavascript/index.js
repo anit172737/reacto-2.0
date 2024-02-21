@@ -80,7 +80,7 @@ const InterviewJavascript = () => {
       }
       if (searchMenu[i].answer === text) {
         let voice = text.replace(
-          /<p>|<\/p>|<ul>|<\/ul>|<li>|<\/li>|<strong>|<\/strong>/g,
+          /<p>|<\/p>|<ul>|<\/ul>|<li>|<\/li>|<strong>|<\/strong>|&nbsp;/g,
           ""
         );
         setLoading(true);
@@ -202,21 +202,19 @@ const InterviewJavascript = () => {
                   </div>
                 </abbr>
               </div>
+              <div className="interviewQ_sec-2">
+                <p
+                  className="interviewQ_sec-2-p"
+                  dangerouslySetInnerHTML={{ __html: qtn?.answer }}
+                ></p>
+                {qtn.descTitle && (
+                  <h4 className="interviewQ_sec-2-h4">{qtn.descTitle}</h4>
+                )}
 
-              <p
-                style={{ lineHeight: "30px" }}
-                dangerouslySetInnerHTML={{ __html: qtn?.answer }}
-              ></p>
-              {qtn?.desc && (
-                <img
-                  style={{
-                    height: "200px",
-                    width: "100%",
-                    borderRadius: "10px",
-                  }}
-                  src={qtn?.desc}
-                ></img>
-              )}
+                {qtn?.desc && (
+                  <img className="interviewQ_sec-2-img" src={qtn?.desc}></img>
+                )}
+              </div>
             </div>
           );
         })

@@ -52,6 +52,25 @@
         }
       }
     }
+
+    &-2 {
+      width: 100%;
+
+      &-p {
+        line-height: 30px;
+      }
+
+      &-h4 {
+        font-style: italic;
+        color: $color-primary;
+      }
+
+      &-img {
+        height: auto;
+        width: 100%;
+        border-radius: 10px;
+      }
+    }
   }
 }
 

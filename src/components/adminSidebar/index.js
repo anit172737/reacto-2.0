@@ -31,13 +31,19 @@ const AdminSidebar = () => {
 
   return (
     <div className="sidebar">
+      <a
+        href="/home"
+        className="sidebar__nav--navlink sidebar__nav--navlink-title"
+      >
+        ☣ <span style={{ fontSize: "30px" }}>Reacto</span>
+      </a>
       <div className="sidebar__nav">
-        <NavLink
+        {/* <NavLink
           to="/home"
           className="sidebar__nav--navlink sidebar__nav--navlink-title"
         >
           ☣ <span style={{ fontSize: "30px" }}>Reacto</span>
-        </NavLink>
+        </NavLink> */}
         {data.map((data, index) => {
           return (
             <>

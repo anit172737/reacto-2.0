@@ -20,11 +20,13 @@ import { Trash, Trash2 } from "react-feather";
 const defaultValues = {
   question: "",
   answer: "",
+  descTitle: "",
   desc: "",
 };
 const AddForm = ({ search, pageNumber, pageSize }) => {
   const { selected } = useSelector((state) => state.javascriptMaster);
   const [sub, setSubmit] = useState(false);
+  const [preview, setPreview] = useState();
   const [desc, setDesc] = useState();
   const dispatch = useDispatch();
   const {
@@ -72,6 +74,7 @@ const AddForm = ({ search, pageNumber, pageSize }) => {
     formData.append("question", data?.question);
     formData.append("answer", data?.answer);
     formData.append("desc", data?.desc);
+    formData.append("descTitle", data?.descTitle);
 
     if (
       answerWatcher &&
@@ -111,18 +114,34 @@ const AddForm = ({ search, pageNumber, pageSize }) => {
 
   useEffect(() => {
     if (selected) {
-      setValue("question", selected.question);
-      setValue("answer", selected.answer);
+      setValue("question", selected?.question);
+      setValue("answer", selected?.answer);
+      setValue("descTitle", selected?.descTitle);
 
-      let lastIndexOfSlash = selected.desc.lastIndexOf("/");
+      let lastIndexOfSlash = selected?.desc?.lastIndexOf("/");
       let filename;
       if (lastIndexOfSlash !== -1) {
-        filename = selected.desc.substring(lastIndexOfSlash + 1);
+        filename = selected?.desc?.substring(lastIndexOfSlash + 1);
       }
-      setValue("desc", selected.desc);
+      setValue("desc", selected?.desc);
       setDesc({ name: filename });
     }
   }, []);
+
+  console.log("preview", preview);
+
+  useEffect(() => {
+    if (!desc) return;
+
+    const imageUrl = selected?.desc
+      ? selected?.desc
+      : URL.createObjectURL(desc);
+    setPreview(imageUrl);
+
+    return () => {
+      URL.revokeObjectURL(imageUrl);
+    };
+  }, [desc]);
 
   return (
     <div className="addModal">
@@ -200,9 +219,38 @@ const AddForm = ({ search, pageNumber, pageSize }) => {
             <div className="addModal__content--input">
               <Label
                 className="form-label addModal__content--input-label"
+                for="answer"
+              >
+                Description Title
+                {/* <span style={{ color: "orangered" }}>*</span> */}
+              </Label>
+              <Controller
+                id="descTitle"
+                name="descTitle"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    className="addModal__content--input-1"
+                    placeholder="Enter description title"
+                    // {...register("descTitle", {
+                    //   required: "Please enter description title ",
+                    // pattern: {
+                    //   value: characterRegex,
+                    //   message: 'Allow Only 100 Character'
+                    // }
+                    // })}
+                    // invalid={errors.question ? true : false}
+                    {...field}
+                  />
+                )}
+              />
+            </div>
+            <div className="addModal__content--input">
+              <Label
+                className="form-label addModal__content--input-label"
                 for="question"
               >
-                Description
+                Description Image
                 {/* <span style={{ color: "orangered" }}>*</span> */}
               </Label>
               <Controller
@@ -211,7 +259,7 @@ const AddForm = ({ search, pageNumber, pageSize }) => {
                 control={control}
                 render={({ field }) => (
                   <>
-                    {desc === "" && desc?.name === undefined ? (
+                    {desc === "" || desc?.name === undefined ? (
                       <Input
                         type="file"
                         className="addModal__content--input-1"
@@ -226,7 +274,7 @@ const AddForm = ({ search, pageNumber, pageSize }) => {
                         <Trash2
                           className="addModal__content--input-delete"
                           onClick={() => (
-                            setDesc(""), setValue("desc", "")
+                            setDesc(""), setValue("desc", ""), setPreview("")
                             // clearErrors("desc"),
                             // setInvalidLogoSize(false),
                             // setInvalidFileType(false)
@@ -238,6 +286,9 @@ const AddForm = ({ search, pageNumber, pageSize }) => {
                 )}
               />
             </div>
+            {preview && (
+              <img className="addModal__content--preview" src={preview} />
+            )}
           </Col>
 
           <Col xs={12} className="addModal__content--footer">
