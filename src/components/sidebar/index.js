@@ -46,12 +46,6 @@ const Sidebar = () => {
       {/* </div> */}
 
       <div className="sidebar__nav">
-        {/* <NavLink
-          to="/home"
-          className="sidebar__nav--navlink sidebar__nav--navlink-title"
-        >
-          ☣ <span style={{ fontSize: "30px" }}>Reacto</span>
-        </NavLink> */}
         {data.map((data, index) => {
           return (
             <>
