@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
 import {
-  JavascriptFetch,
-  JavascriptAdd,
-  JavascriptEdit,
-  JavascriptDelete,
+  ReactFetch,
+  ReactAdd,
+  ReactEdit,
+  ReactDelete,
 } from "../../../../../services/apiEndpoints";
 import {
   privateGet,
@@ -13,16 +13,16 @@ import {
   privateDelete,
 } from "../../../../../services/privateRequest";
 
-export const fetchJsQtnList = createAsyncThunk(
-  "javascriptMaster",
+export const fetchReactQtnList = createAsyncThunk(
+  "reactMaster",
   async (params, { dispatch }) => {
     try {
       const response = await privateGet(
-        JavascriptFetch +
+        ReactFetch +
           `?search=${params?.search}&pageSize=${params?.pageSize}&pageNumber=${params?.pageNumber}`
       );
       return {
-        jsQtnList: response.data.data.questions,
+        reactQtnList: response.data.data.questions,
         total: response.data.data.total,
       };
     } catch (error) {
@@ -31,17 +31,17 @@ export const fetchJsQtnList = createAsyncThunk(
   }
 );
 
-export const addJsQtn = createAsyncThunk(
-  "javascriptMaster",
+export const addReactQtn = createAsyncThunk(
+  "reactMaster",
   async (params, { dispatch }) => {
     console.log("params.data", params.data);
     try {
-      await privatePost(JavascriptAdd, params.data).then((res) =>
+      await privatePost(ReactAdd, params.data).then((res) =>
         res.data.error
           ? toast.error(res.data.error)
           : toast.success(res.data.message)
       );
-      dispatch(fetchJsQtnList({ ...params }));
+      dispatch(fetchReactQtnList({ ...params }));
       return true;
     } catch (error) {
       toast.error(error?.response?.error);
@@ -49,16 +49,16 @@ export const addJsQtn = createAsyncThunk(
   }
 );
 
-export const editJsQtn = createAsyncThunk(
-  "javascriptMaster",
+export const editReactQtn = createAsyncThunk(
+  "reactMaster",
   async (params, { dispatch }) => {
     try {
-      await privatePut(JavascriptEdit, params?.id, params?.data).then((res) =>
+      await privatePut(ReactEdit, params?.id, params?.data).then((res) =>
         res.data.error
           ? toast.error(res.data.error)
           : toast.success(res.data.message)
       );
-      dispatch(fetchJsQtnList({ ...params }));
+      dispatch(fetchReactQtnList({ ...params }));
       return true;
     } catch (error) {
       toast.error(error?.response?.data?.error);
@@ -66,16 +66,16 @@ export const editJsQtn = createAsyncThunk(
   }
 );
 
-export const deleteJsQtn = createAsyncThunk(
-  "javascriptMaster",
+export const deleteReactQtn = createAsyncThunk(
+  "reactMaster",
   async (params, { dispatch }) => {
     try {
-      await privateDelete(JavascriptDelete, params.id).then((res) =>
+      await privateDelete(ReactDelete, params.id).then((res) =>
         res.data.error
           ? toast.error(res.data.error)
           : toast.success(res.data.message)
       );
-      dispatch(fetchJsQtnList({ ...params }));
+      dispatch(fetchReactQtnList({ ...params }));
       return true;
     } catch (error) {
       toast.error(error?.response?.data?.error);
@@ -83,10 +83,10 @@ export const deleteJsQtn = createAsyncThunk(
   }
 );
 
-const javascriptMaster = createSlice({
-  name: "javascriptMaster",
+const reactMaster = createSlice({
+  name: "reactMaster",
   initialState: {
-    jsQtnList: [],
+    reactQtnList: [],
     total: null,
     search: "",
     selected: null,
@@ -108,14 +108,14 @@ const javascriptMaster = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchJsQtnList.fulfilled, (state, action) => {
-      state.jsQtnList = action?.payload?.jsQtnList;
+    builder.addCase(fetchReactQtnList.fulfilled, (state, action) => {
+      state.reactQtnList = action?.payload?.reactQtnList;
       state.total = action?.payload?.total;
     });
   },
 });
 
 export const { setSearch, setSelecetd, setOpenForm, setOpenDeleteForm } =
-  javascriptMaster.actions;
+  reactMaster.actions;
 
-export default javascriptMaster.reducer;
+export default reactMaster.reducer;

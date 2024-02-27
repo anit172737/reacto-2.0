@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import "../../../../sass/pages/admin/form.scss";
 
 import { Button, Col, Form, FormFeedback, Input, Label, Row } from "reactstrap";
-import { addJsQtn, setOpenForm, setSelecetd, editJsQtn } from "./store";
+import { addReactQtn, setOpenForm, setSelecetd, editReactQtn } from "./store";
 import { Editor } from "@tinymce/tinymce-react";
 import { textEditorInit } from "../../../../components/textEditorInit";
 import { Trash, Trash2 } from "react-feather";
@@ -18,7 +18,7 @@ const defaultValues = {
   desc: "",
 };
 const AddForm = ({ search, pageNumber, pageSize }) => {
-  const { selected } = useSelector((state) => state.javascriptMaster);
+  const { selected } = useSelector((state) => state.reactMaster);
   const [sub, setSubmit] = useState(false);
   const [preview, setPreview] = useState();
   const [desc, setDesc] = useState();
@@ -83,7 +83,7 @@ const AddForm = ({ search, pageNumber, pageSize }) => {
           pageSize,
           pageNumber,
         };
-        response = await dispatch(editJsQtn(modify));
+        response = await dispatch(editReactQtn(modify));
       } else {
         // await dispatch(setLoader(true));
         const payload = {
@@ -92,7 +92,7 @@ const AddForm = ({ search, pageNumber, pageSize }) => {
           pageSize,
           pageNumber,
         };
-        response = await dispatch(addJsQtn(payload));
+        response = await dispatch(addReactQtn(payload));
       }
     } else {
       setValue("answer", "");

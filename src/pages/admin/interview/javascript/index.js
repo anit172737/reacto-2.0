@@ -74,7 +74,7 @@ const customStyles = {
 const JavascriptTable = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(5);
   const { jsQtnList, openForm, openDeleteForm, selected, total } = useSelector(
     (state) => state.javascriptMaster
   );
