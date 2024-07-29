@@ -23,6 +23,10 @@ const LazyInterviewJavascript = lazy(() =>
 );
 const LazyInterviewCss = lazy(() => import("../pages/private/interviewCss"));
 const LazyInterviewHtml = lazy(() => import("../pages/private/interviewHtml"));
+const LazyInterviewNext = lazy(() => import("../pages/private/interviewNext"));
+const LazyInterviewTypescript = lazy(() =>
+  import("../pages/private/interviewTypescript")
+);
 
 const LazyDashboard = lazy(() => import("../pages/admin/dashboard"));
 const LazyInterviewJavascriptTable = lazy(() =>
@@ -75,6 +79,8 @@ export const router = createBrowserRouter([
       { element: <LazyInterviewJavascript />, path: "/interview-javascript" },
       { element: <LazyInterviewCss />, path: "/interview-css" },
       { element: <LazyInterviewHtml />, path: "/interview-html" },
+      { element: <LazyInterviewNext />, path: "/interview-next" },
+      { element: <LazyInterviewTypescript />, path: "/interview-typescript" },
     ],
   },
 
