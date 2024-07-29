@@ -4,6 +4,8 @@ const cors = require("cors");
 const userRoutes = require("./routes/users/userRoutes");
 const javascriptRoutes = require("./routes/interview/javascript/javascriptRoutes");
 const reactRoutes = require("./routes/interview/reactjs/reactjsRoutes");
+const nextRoutes = require("./routes/interview/nextjs/nextjsRoutes");
+const typescriptRoutes = require("./routes/interview/typescript/typescriptRoutes");
 const upload = require("./middleware/uploader");
 const app = express();
 // const bcryptjs = require("bcryptjs");
@@ -19,6 +21,9 @@ connect();
 app.use("/api/user", userRoutes);
 app.use("/api/javascript", javascriptRoutes);
 app.use("/api/react", reactRoutes);
+app.use("/api/next", nextRoutes);
+app.use("/api/type", typescriptRoutes);
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

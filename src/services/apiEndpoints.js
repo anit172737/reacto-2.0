@@ -14,6 +14,18 @@ export const ReactAdd = "/react/addReact";
 export const ReactEdit = "/react/editReact";
 export const ReactDelete = "/react/deleteReact";
 
+//next question's api endpoints
+export const NextFetch = "/next/nextList";
+export const NextAdd = "/next/addNext";
+export const NextEdit = "/next/editNext";
+export const NextDelete = "/next/deleteNext";
+
+//typescript question's api endpoints
+export const TypeFetch = "/type/typeList";
+export const TypeAdd = "/type/addType";
+export const TypeEdit = "/type/editType";
+export const TypeDelete = "/type/deleteType";
+
 //Angular question's api endpoints
 export const AngularFetch = "/angular/angularList";
 export const AngularAdd = "/angular/addAngular";

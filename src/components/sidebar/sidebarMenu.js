@@ -70,6 +70,16 @@ const Menu = [
         icon: <Layers size={18} />,
         navName: "React",
       },
+      {
+        url: "interview-next",
+        icon: <Layers size={18} />,
+        navName: "Next",
+      },
+      {
+        url: "interview-typescript",
+        icon: <Layers size={18} />,
+        navName: "Typescript",
+      },
     ],
   },
 ];
