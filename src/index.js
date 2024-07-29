@@ -5,7 +5,9 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import App from "./App";
 import { store } from "./redux/store";
+import ReactGA from "react-ga4";
 
+ReactGA.initialize("G-BRS3851Z49");
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
