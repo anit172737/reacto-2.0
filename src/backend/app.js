@@ -14,11 +14,29 @@ const port = 8000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-// app.use(
-//   cors({
-//     origin: "https://reacto2.vercel.app/", // Replace with your Vercel app URL
-//   })
-// );
+// Define allowed origins
+const allowedOrigins = [
+  "http://localhost:8000", // Local development
+  "https://reacto2.vercel.app/", // Your Vercel app URL
+  "https://abcd1234.loca.lt", // Replace with your Localtunnel URL
+];
+
+// Configure CORS middleware
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+
+      // Check if the origin is in the allowedOrigins array
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 
 app.use("/uploads", express.static("../uploads"));
 
