@@ -81,7 +81,7 @@ const Css = () => {
 
   return (
     <div className="interviewQ">
-      <Header title="CSS Interview Questions" setSearch={setSearch} />
+      <Header title="CSS Questions" setSearch={setSearch} />
       {searchMenu.length !== 0 ? (
         searchMenu.map((qtn) => {
           return (

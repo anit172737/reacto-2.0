@@ -81,7 +81,7 @@ const Html = () => {
 
   return (
     <div className="interviewQ">
-      <Header title="HTML Interview Questions" setSearch={setSearch} />
+      <Header title="HTML Questions" setSearch={setSearch} />
       {searchMenu.length !== 0 ? (
         searchMenu.map((qtn) => {
           return (

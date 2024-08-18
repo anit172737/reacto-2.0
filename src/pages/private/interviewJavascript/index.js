@@ -162,7 +162,7 @@ const InterviewJavascript = () => {
 
   return (
     <div className="interviewQ">
-      <Header title="Javascript Interview Questions" setSearch={setSearch} />
+      <Header title="Javascript Questions" setSearch={setSearch} />
       {searchMenu?.length !== 0 ? (
         searchMenu?.map((qtn) => {
           return (

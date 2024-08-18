@@ -162,7 +162,7 @@ const InterviewReact = () => {
 
   return (
     <div className="interviewQ">
-      <Header title="React Interview Questions" setSearch={setSearch} />
+      <Header title="React Questions" setSearch={setSearch} />
       {searchMenu?.length !== 0 ? (
         searchMenu?.map((qtn) => {
           return (
