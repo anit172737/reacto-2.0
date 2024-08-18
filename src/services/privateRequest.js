@@ -1,9 +1,11 @@
 import axios from "axios";
-import { baseUrl } from "../app.config";
 import { toast, Toaster } from "react-hot-toast";
+import { baseUrl } from "../app.config";
 
 const privateRequest = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL,
+  baseURL: window.location.origin.includes("localhost")
+    ? process.env.REACT_APP_API_BASE_URL_UAT
+    : process.env.REACT_APP_API_BASE_URL_LIVE,
 });
 
 privateRequest.interceptors.request.use(

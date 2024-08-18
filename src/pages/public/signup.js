@@ -7,10 +7,13 @@ import { emailRegex, passwordRegex } from "../../utility/utils";
 import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
 import { SignUpApi } from "../../services/apiEndpoints";
+import { baseUrl } from "../../app.config";
 
 const Signup = () => {
   const [loading, setLoading] = useState(false);
-  const baseUrl = process.env.REACT_APP_API_BASE_URL;
+  const baseUrl = window.location.origin.includes("localhost")
+    ? process.env.REACT_APP_API_BASE_URL_UAT
+    : process.env.REACT_APP_API_BASE_URL_LIVE;
   const navigate = useNavigate();
   const defaultValues = {
     email: "",

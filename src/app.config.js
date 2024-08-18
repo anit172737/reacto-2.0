@@ -1,1 +1,3 @@
-export const baseUrl = process.env.REACT_APP_API_BASE_URL;
+export const baseUrl = window.location.origin.includes("localhost")
+  ? process.env.REACT_APP_API_BASE_URL_UAT
+  : process.env.REACT_APP_API_BASE_URL_LIVE;

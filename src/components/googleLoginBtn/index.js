@@ -5,17 +5,21 @@ import { useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import { LoginContext } from "../../utility/loginContext";
 import axios from "axios";
+import { baseUrl } from "../../app.config";
 
 const GoogleLoginBtn = () => {
   const { setGoogleLogin, setUser } = useContext(LoginContext);
-  const baseUrl = process.env.REACT_APP_API_BASE_URL;
+  const baseUrl = window.location.origin.includes("localhost")
+    ? process.env.REACT_APP_API_BASE_URL_UAT
+    : process.env.REACT_APP_API_BASE_URL_LIVE;
+  baseUrl;
   const navigate = useNavigate();
   const clientId =
     "1014433680425-9qjpd7cmkgtvhsdamvv762ploeb3baer.apps.googleusercontent.com";
 
   const onSuccess = async (res) => {
     console.log("Login Success!", res.profileObj);
-    localStorage.setItem('googleLogin', 'yes')
+    localStorage.setItem("googleLogin", "yes");
     setUser(res.profileObj.email);
     const data = {
       email: res.profileObj.email,
