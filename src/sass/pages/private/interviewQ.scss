@@ -58,6 +58,11 @@
 
       &-p {
         line-height: 30px;
+
+        ul,
+        ol {
+          padding-left: 25px;
+        }
       }
 
       &-h4 {

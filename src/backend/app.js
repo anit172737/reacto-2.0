@@ -14,7 +14,7 @@ const port = 8000;
 const allowedOrigins = [
   "http://localhost:3000", // Local development
   "https://reacto2.vercel.app", // Your Vercel app URL
-  "https://2b58cd70309ae02d4b66820f51a2f3a5.serveo.net", // Your Localtunnel URL
+  "https://newreacto.serveo.net", // Your Localtunnel URL
 ];
 
 // CORS configuration

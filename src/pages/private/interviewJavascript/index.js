@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import "../../../sass/pages/private/interviewQ.scss";
 // import Menu from "./menuJavascript";
 import Header from "../../../components/header";
@@ -144,6 +144,13 @@ const InterviewJavascript = () => {
     dispatch(fetchJsQtnList(payload));
   }, [search, pageSize, currentPage]);
 
+  useLayoutEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [currentPage]);
+
   useEffect(() => {
     let Menu;
     if (jsQtnList) {
@@ -156,9 +163,6 @@ const InterviewJavascript = () => {
     }
     setSearchMenu(Menu);
   }, [jsQtnList]);
-
-  console.log("searchMenu", searchMenu);
-  console.log("pause", pause);
 
   return (
     <div className="interviewQ">

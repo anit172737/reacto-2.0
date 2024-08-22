@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { ChevronDown } from "react-feather";
 import { Circles } from "react-loader-spinner";
@@ -222,6 +222,13 @@ const JavascriptTable = () => {
     };
     dispatch(fetchJsQtnList(payload));
   }, [search, pageSize, currentPage]);
+
+  useLayoutEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [currentPage]);
 
   return (
     <div className="adminContainer">
