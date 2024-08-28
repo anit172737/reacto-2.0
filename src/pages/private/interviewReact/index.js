@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../../sass/pages/private/interviewQ.scss";
 // import Menu from "./menureact";
 import Header from "../../../components/header";
-import { searchFunction } from "../../../utility/helperFunctions";
+import { ThreeDots } from "react-loader-spinner";
 import { PlayCircle, PauseCircle } from "react-feather";
 import Speech from "speak-tts";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,11 +13,13 @@ const InterviewReact = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  const { reactQtnList, openForm, openDeleteForm, selected, total } =
-    useSelector((state) => state.reactMaster);
+  const { qtnList, openForm, openDeleteForm, selected, total } = useSelector(
+    (state) => state.reactMaster
+  );
   const [speaking, setSpeaking] = useState(false);
   const [pause, setPause] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const [searchMenu, setSearchMenu] = useState();
   const dispatch = useDispatch();
@@ -140,14 +142,14 @@ const InterviewReact = () => {
   };
 
   useEffect(() => {
-    const payload = { search, pageSize, pageNumber: currentPage };
+    const payload = { search, pageSize, pageNumber: currentPage, setLoader };
     dispatch(fetchReactQtnList(payload));
   }, [search, pageSize, currentPage]);
 
   useEffect(() => {
     let Menu;
-    if (reactQtnList) {
-      Menu = reactQtnList.map((e) => {
+    if (qtnList) {
+      Menu = qtnList.map((e) => {
         return {
           ...e,
           pause: false,
@@ -155,85 +157,94 @@ const InterviewReact = () => {
       });
     }
     setSearchMenu(Menu);
-  }, [reactQtnList]);
+  }, [qtnList]);
 
   // console.log("searchMenu", searchMenu);
-  console.log("pause", pause);
+  console.log("loader", loader);
+  console.log("searchMenu", searchMenu);
 
   return (
     <div className="interviewQ">
       <Header title="React Questions" setSearch={setSearch} />
-      {searchMenu?.length !== 0 ? (
-        searchMenu?.map((qtn) => {
-          return (
-            <div className="interviewQ_sec">
-              <div className="interviewQ_sec-1">
-                <h3>{qtn?.question}</h3>
+      {!loader ? (
+        searchMenu?.length !== 0 ? (
+          searchMenu?.map((qtn) => {
+            return (
+              <div className="interviewQ_sec">
+                <div className="interviewQ_sec-1">
+                  <h3>{qtn?.question}</h3>
 
-                <abbr title="listen answer" style={{ justifySelf: "end" }}>
-                  <div className="interviewQ_sec-1-speech">
-                    {qtn?.speaking === false && qtn?.pause === false ? (
-                      <PlayCircle
-                        // className="interviewQ_sec-1-speech-speak"
-                        className={`${
-                          qtn?.loading
-                            ? "animate"
-                            : "interviewQ_sec-1-speech-speak"
-                        }`}
-                        onClick={() => handleSpeech(qtn?.answer)}
-                      />
-                    ) : qtn?.speaking === true && qtn?.pause === false ? (
-                      <PauseCircle
-                        className="interviewQ_sec-1-speech-speak"
-                        onClick={() => handlePause(qtn?.answer)}
-                      />
-                    ) : (
-                      <PlayCircle
-                        // className="interviewQ_sec-1-speech-speak"
-                        className={`${
-                          // qtn?.loading
-                          //   ? "animate"
-                          //       :
-                          "interviewQ_sec-1-speech-speak"
-                        }`}
-                        onClick={() => handleResume(qtn?.answer)}
-                      />
-                    )}
-                  </div>
-                </abbr>
-              </div>
-              <div className="interviewQ_sec-2">
-                <p
-                  className="interviewQ_sec-2-p"
-                  dangerouslySetInnerHTML={{ __html: qtn?.answer }}
-                ></p>
-                {qtn.descTitle && (
-                  <h4 className="interviewQ_sec-2-h4">{qtn.descTitle}</h4>
-                )}
+                  <abbr title="listen answer" style={{ justifySelf: "end" }}>
+                    <div className="interviewQ_sec-1-speech">
+                      {qtn?.speaking === false && qtn?.pause === false ? (
+                        <PlayCircle
+                          // className="interviewQ_sec-1-speech-speak"
+                          className={`${
+                            qtn?.loading
+                              ? "animate"
+                              : "interviewQ_sec-1-speech-speak"
+                          }`}
+                          onClick={() => handleSpeech(qtn?.answer)}
+                        />
+                      ) : qtn?.speaking === true && qtn?.pause === false ? (
+                        <PauseCircle
+                          className="interviewQ_sec-1-speech-speak"
+                          onClick={() => handlePause(qtn?.answer)}
+                        />
+                      ) : (
+                        <PlayCircle
+                          // className="interviewQ_sec-1-speech-speak"
+                          className={`${
+                            // qtn?.loading
+                            //   ? "animate"
+                            //       :
+                            "interviewQ_sec-1-speech-speak"
+                          }`}
+                          onClick={() => handleResume(qtn?.answer)}
+                        />
+                      )}
+                    </div>
+                  </abbr>
+                </div>
+                <div className="interviewQ_sec-2">
+                  <p
+                    className="interviewQ_sec-2-p"
+                    dangerouslySetInnerHTML={{ __html: qtn?.answer }}
+                  ></p>
+                  {qtn.descTitle && (
+                    <h4 className="interviewQ_sec-2-h4">{qtn.descTitle}</h4>
+                  )}
 
-                {qtn?.desc && (
-                  <img className="interviewQ_sec-2-img" src={qtn?.desc}></img>
-                )}
+                  {qtn?.desc && (
+                    <img className="interviewQ_sec-2-img" src={qtn?.desc}></img>
+                  )}
+                </div>
               </div>
-            </div>
-          );
-        })
+            );
+          })
+        ) : (
+          <div
+            className="interviewQ_sec"
+            style={{ paddingBottom: "0px", textAlign: "center" }}
+          >
+            No data found
+          </div>
+        )
       ) : (
-        <div
-          className="interviewQ_sec"
-          style={{ paddingBottom: "0px", textAlign: "center" }}
-        >
-          No data found
+        <div style={{ display: "grid", justifyContent: "center" }}>
+          <ThreeDots size={10} color="#6c63ff" />
         </div>
       )}
-      <CustomPagination
-        className="pagination-bar"
-        currentPage={currentPage}
-        totalCount={total}
-        pageSize={pageSize}
-        onPageChange={(page) => setCurrentPage(page)}
-        handlePageSizeChange={handlePageSizeChange}
-      />
+      {!loader && (
+        <CustomPagination
+          className="pagination-bar"
+          currentPage={currentPage}
+          totalCount={total}
+          pageSize={pageSize}
+          onPageChange={(page) => setCurrentPage(page)}
+          handlePageSizeChange={handlePageSizeChange}
+        />
+      )}
     </div>
   );
 };

@@ -75,33 +75,6 @@ const ReactTable = () => {
   }, []);
 
   return (
-    // <div className="adminContainer">
-    //   {openForm && (
-    //     <AddForm search={search} pageSize={pageSize} pageNumber={currentPage} />
-    //   )}
-    //   {openDeleteForm && <DeleteForm {...deleteConfig} />}
-    //   <AdminHeader
-    //     title="React Data Table"
-    //     setSearch={setSearch}
-    //     handleAdd={handleAdd}
-    //   />
-    //   <DataTable
-    //     pagination
-    //     subHeader={false}
-    //     noHeader={true}
-    //     responsive
-    //     highlightOnHover
-    //     paginationServer
-    //     progressComponent={<Circles />}
-    //     columns={columns}
-    //     data={dataToRender()}
-    //     sortIcon={<ChevronDown />}
-    //     className="react-dataTable"
-    //     paginationComponent={renderPaginationComponent}
-    //     // theme="solarized"
-    //     customStyles={customStyles}
-    //   />
-    // </div>
     <>
       <UserComponent
         search={search}
