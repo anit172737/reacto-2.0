@@ -10,9 +10,7 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import "../../sass/pages/admin/columns.scss";
 import DeleteForm from "../deleteForm";
 import CustomPagination from "../customPagination";
-import AddForm from "../../pages/admin/interview/javascript/Form";
 import AdminHeader from "../adminHeader";
-import toast from "react-hot-toast";
 import AdminForm from "../adminForm";
 
 createTheme(
@@ -64,7 +62,7 @@ const customStyles = {
   },
 };
 
-const UserComponent = ({
+const AdminComponent = ({
   search,
   setSearch,
   currentPage,
@@ -91,7 +89,7 @@ const UserComponent = ({
     {
       name: "QUESTION",
       selector: "question",
-      width: "40%",
+      width: "30%",
       sortable: false,
       selector: (row) => row.question,
       cell: (row) => (
@@ -103,7 +101,7 @@ const UserComponent = ({
     {
       name: "ANSWER",
       selector: "answer",
-      width: "40%",
+      width: "60%",
       sortable: false,
       selector: (row) => row.answer,
       cell: (row) => (
@@ -136,7 +134,7 @@ const UserComponent = ({
     },
     {
       name: "ACTIONS",
-      width: "20%",
+      width: "10%",
       cell: (row) => {
         return (
           <div
@@ -269,4 +267,4 @@ const UserComponent = ({
   );
 };
 
-export default UserComponent;
+export default AdminComponent;

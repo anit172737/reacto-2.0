@@ -1,27 +1,31 @@
 import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
-import "../../../sass/pages/private/interviewQ.scss";
-// import Menu from "./menuJavascript";
-import Header from "../../../components/header";
+import "../../sass/pages/private/interviewQ.scss";
+import Header from "../header";
 import { ThreeDots } from "react-loader-spinner";
 import { PlayCircle, PauseCircle } from "react-feather";
 import Speech from "speak-tts";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchJsQtnList } from "../../admin/interview/javascript/store";
-import CustomPagination from "../../../components/customPagination";
+import { useSelector } from "react-redux";
+import CustomPagination from "../customPagination";
 
-const InterviewJavascript = () => {
-  const [search, setSearch] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
-  const { qtnList, total } = useSelector((state) => state.javascriptMaster);
+const UserComponent = ({
+  search,
+  setSearch,
+  currentPage,
+  setCurrentPage,
+  pageSize,
+  setPageSize,
+  loader,
+  setLoader,
+  searchMenu,
+  setSearchMenu,
+  master,
+  title,
+  fetchQtnList,
+}) => {
+  const { qtnList, total } = useSelector((state) => state[master]);
   const [speaking, setSpeaking] = useState(false);
   const [pause, setPause] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [loader, setLoader] = useState(false);
-
-  const [searchMenu, setSearchMenu] = useState();
-  const dispatch = useDispatch();
-
   const speech = new Speech(); // will throw an exception if not browser supported
 
   // Example with full conf
@@ -139,18 +143,6 @@ const InterviewJavascript = () => {
   };
 
   useEffect(() => {
-    const payload = { search, pageSize, pageNumber: currentPage, setLoader };
-    dispatch(fetchJsQtnList(payload));
-  }, [search, pageSize, currentPage]);
-
-  useLayoutEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, [currentPage]);
-
-  useEffect(() => {
     let Menu;
     if (qtnList) {
       Menu = qtnList.map((e) => {
@@ -165,7 +157,7 @@ const InterviewJavascript = () => {
 
   return (
     <div className="interviewQ">
-      <Header title="Javascript Questions" setSearch={setSearch} />
+      <Header title={`${title} Questions`} setSearch={setSearch} />
       {!loader ? (
         searchMenu?.length !== 0 ? (
           searchMenu?.map((qtn) => {
@@ -249,4 +241,4 @@ const InterviewJavascript = () => {
   );
 };
 
-export default InterviewJavascript;
+export default UserComponent;

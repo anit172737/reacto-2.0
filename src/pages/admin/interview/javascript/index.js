@@ -13,7 +13,7 @@ import {
   editJsQtn,
 } from "./store";
 import "../../../../sass/pages/admin/columns.scss";
-import UserComponent from "../../../../components/adminComponent";
+import AdminComponent from "../../../../components/adminComponent";
 import {
   handleOffline,
   handleOnline,
@@ -77,7 +77,7 @@ const JavascriptTable = () => {
 
   return (
     <>
-      <UserComponent
+      <AdminComponent
         search={search}
         setSearch={setSearch}
         currentPage={currentPage}

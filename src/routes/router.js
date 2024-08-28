@@ -16,16 +16,18 @@ const LazyComponents = lazy(() => import("../pages/private/components"));
 const LazyFunction = lazy(() => import("../pages/private/components/function"));
 const LazyClass = lazy(() => import("../pages/private/components/class"));
 const LazyInterviewReact = lazy(() =>
-  import("../pages/private/interviewReact")
+  import("../pages/private/interview/interviewReact")
 );
 const LazyInterviewJavascript = lazy(() =>
-  import("../pages/private/interviewJavascript")
+  import("../pages/private/interview/interviewJavascript")
 );
 const LazyInterviewCss = lazy(() => import("../pages/private/interviewCss"));
 const LazyInterviewHtml = lazy(() => import("../pages/private/interviewHtml"));
-const LazyInterviewNext = lazy(() => import("../pages/private/interviewNext"));
+const LazyInterviewNext = lazy(() =>
+  import("../pages/private/interview/interviewNext")
+);
 const LazyInterviewTypescript = lazy(() =>
-  import("../pages/private/interviewTypescript")
+  import("../pages/private/interview/interviewTypescript")
 );
 
 const LazyDashboard = lazy(() => import("../pages/admin/dashboard"));
