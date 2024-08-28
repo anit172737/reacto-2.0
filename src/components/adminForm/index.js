@@ -72,6 +72,8 @@ const AdminForm = ({
     formData.append("answer", data?.answer);
     formData.append("desc", data?.desc ? data.desc : "");
     formData.append("descTitle", data?.descTitle);
+    formData.append("loading", false);
+    formData.append("speaking", false);
 
     if (
       answerWatcher &&
@@ -91,7 +93,7 @@ const AdminForm = ({
       } else {
         // await dispatch(setLoader(true));
         const payload = {
-          data: { ...data },
+          data: { ...data, loading: false, speaking: false },
           search,
           pageSize,
           pageNumber,

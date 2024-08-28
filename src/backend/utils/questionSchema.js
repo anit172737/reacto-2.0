@@ -16,6 +16,12 @@ const questionSchema = {
   desc: {
     type: String,
   },
+  loading: {
+    type: Boolean,
+  },
+  speaking: {
+    type: Boolean,
+  },
 };
 
 module.exports = questionSchema;

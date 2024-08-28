@@ -9,13 +9,17 @@ const InterviewTypescript = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [loader, setLoader] = useState(false);
+  const [isTriggered, setIsTriggered] = useState(false);
   const [searchMenu, setSearchMenu] = useState();
   const dispatch = useDispatch();
+  const payload = { search, pageSize, pageNumber: currentPage, setLoader };
 
   useEffect(() => {
-    const payload = { search, pageSize, pageNumber: currentPage, setLoader };
-    dispatch(fetchTypeQtnList(payload));
-  }, [search, pageSize, currentPage]);
+    setIsTriggered(true);
+    if (isTriggered) {
+      dispatch(fetchTypeQtnList(payload));
+    }
+  }, [search, pageSize, currentPage, isTriggered]);
 
   return (
     <UserComponent
@@ -30,7 +34,7 @@ const InterviewTypescript = () => {
       searchMenu={searchMenu}
       setSearchMenu={setSearchMenu}
       master="typeMaster"
-      title="Type"
+      title="TypeScript"
       fetchQtnList={fetchTypeQtnList}
     />
   );
