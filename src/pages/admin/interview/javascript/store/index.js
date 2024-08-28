@@ -15,17 +15,27 @@ import {
 
 export const fetchJsQtnList = createAsyncThunk(
   "javascriptMaster",
-  async (params, { dispatch }) => {
+  async ({ search, pageSize, pageNumber, setLoader }, { dispatch }) => {
     try {
+      setLoader(true);
       const response = await privateGet(
         JavascriptFetch +
-          `?search=${params?.search}&pageSize=${params?.pageSize}&pageNumber=${params?.pageNumber}`
+          `?search=${search}&pageSize=${pageSize}&pageNumber=${pageNumber}`
       );
-      return {
-        jsQtnList: response.data.data.questions,
-        total: response.data.data.total,
-      };
+      console.log("response", response);
+      if (response.data.hasOwnProperty("error")) {
+        setLoader(false);
+        toast.error(response.data.error);
+      } else {
+        setLoader(false);
+        return {
+          qtnList: response.data.data.questions,
+          total: response.data.data.total,
+        };
+      }
     } catch (error) {
+      setLoader(false);
+      console.log("error", error);
       toast.error(error?.response?.data?.message);
     }
   }
@@ -86,7 +96,7 @@ export const deleteJsQtn = createAsyncThunk(
 const javascriptMaster = createSlice({
   name: "javascriptMaster",
   initialState: {
-    jsQtnList: [],
+    qtnList: [],
     total: null,
     search: "",
     selected: null,
@@ -109,7 +119,7 @@ const javascriptMaster = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchJsQtnList.fulfilled, (state, action) => {
-      state.jsQtnList = action?.payload?.jsQtnList;
+      state.qtnList = action?.payload?.qtnList;
       state.total = action?.payload?.total;
     });
   },

@@ -15,17 +15,26 @@ import {
 
 export const fetchReactQtnList = createAsyncThunk(
   "reactMaster",
-  async (params, { dispatch }) => {
+  async ({ search, pageSize, pageNumber, setLoader }, { dispatch }) => {
     try {
+      setLoader(true);
       const response = await privateGet(
         ReactFetch +
-          `?search=${params?.search}&pageSize=${params?.pageSize}&pageNumber=${params?.pageNumber}`
+          `?search=${search}&pageSize=${pageSize}&pageNumber=${pageNumber}`
       );
-      return {
-        reactQtnList: response.data.data.questions,
-        total: response.data.data.total,
-      };
+      if (response.data.hasOwnProperty("error")) {
+        setLoader(false);
+        toast.error(response.data.error);
+      } else {
+        setLoader(false);
+        return {
+          qtnList: response.data.data.questions,
+          total: response.data.data.total,
+        };
+      }
     } catch (error) {
+      setLoader(false);
+      console.log("error", error);
       toast.error(error?.response?.data?.message);
     }
   }
@@ -86,7 +95,7 @@ export const deleteReactQtn = createAsyncThunk(
 const reactMaster = createSlice({
   name: "reactMaster",
   initialState: {
-    reactQtnList: [],
+    qtnList: [],
     total: null,
     search: "",
     selected: null,
@@ -109,7 +118,7 @@ const reactMaster = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchReactQtnList.fulfilled, (state, action) => {
-      state.reactQtnList = action?.payload?.reactQtnList;
+      state.qtnList = action?.payload?.qtnList;
       state.total = action?.payload?.total;
     });
   },

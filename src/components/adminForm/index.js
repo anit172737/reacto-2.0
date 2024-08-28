@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import "../../../../sass/pages/admin/form.scss";
+import "../../sass/pages/admin/form.scss";
 
 import { Button, Col, Form, FormFeedback, Input, Label, Row } from "reactstrap";
-import { addJsQtn, setOpenForm, setSelecetd, editJsQtn } from "./store";
 import { Editor } from "@tinymce/tinymce-react";
-import { textEditorInit } from "../../../../components/textEditorInit";
+import { textEditorInit } from "../textEditorInit";
 import { Trash, Trash2 } from "react-feather";
 // import { addContact, editContact, selectContact, setLoader } from "./store";
 
@@ -17,8 +15,18 @@ const defaultValues = {
   descTitle: "",
   desc: "",
 };
-const AddForm = ({ search, pageNumber, pageSize, setLoader }) => {
-  const { selected } = useSelector((state) => state.javascriptMaster);
+const AdminForm = ({
+  search,
+  pageNumber,
+  pageSize,
+  setLoader,
+  addQtn,
+  setOpenForm,
+  setSelecetd,
+  editQtn,
+  master,
+}) => {
+  const { selected } = useSelector((state) => state[master]);
   const [sub, setSubmit] = useState(false);
   const [preview, setPreview] = useState();
   const [desc, setDesc] = useState();
@@ -40,11 +48,6 @@ const AddForm = ({ search, pageNumber, pageSize, setLoader }) => {
     dispatch(setOpenForm(false));
     dispatch(setSelecetd(null));
     reset();
-  };
-
-  const handleEditorChange = (e) => {
-    // setValue("answer", e.level.content);
-    // setSubmit(false);
   };
 
   const handleRemoveEditorError = (e) => {
@@ -84,7 +87,7 @@ const AddForm = ({ search, pageNumber, pageSize, setLoader }) => {
           pageNumber,
           setLoader,
         };
-        response = await dispatch(editJsQtn(modify));
+        response = await dispatch(editQtn(modify));
       } else {
         // await dispatch(setLoader(true));
         const payload = {
@@ -94,7 +97,7 @@ const AddForm = ({ search, pageNumber, pageSize, setLoader }) => {
           pageNumber,
           setLoader,
         };
-        response = await dispatch(addJsQtn(payload));
+        response = await dispatch(addQtn(payload));
       }
     } else {
       setValue("answer", "");
@@ -310,4 +313,4 @@ const AddForm = ({ search, pageNumber, pageSize, setLoader }) => {
   );
 };
 
-export default AddForm;
+export default AdminForm;

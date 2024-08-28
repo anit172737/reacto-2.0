@@ -20,3 +20,17 @@ export const handleLogout = () => {
     });
   }
 };
+
+export const handleOnline = ({ setIsOnlineTriggered, toast, toastId }) => {
+  setIsOnlineTriggered(true);
+  toast.dismiss(toastId.current); // Dismiss any existing toast
+  toastId.current = toast.success("You are now online."); // Show online toast
+  // }
+};
+
+export const handleOffline = ({ setIsOnlineTriggered, toast, toastId }) => {
+  setIsOnlineTriggered(false);
+  toast.dismiss(toastId.current); // Dismiss any existing toast
+  toastId.current = toast.error("You are now offline."); // Show offline toast
+  // }
+};
