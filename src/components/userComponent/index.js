@@ -83,7 +83,7 @@ const UserComponent = ({
       }
       if (searchMenu[i].answer === text) {
         let voice = text.replace(
-          /<p>|<\/p>|<ul>|<\/ul>|<li>|<\/li>|<strong>|<\/strong>|&nbsp;/g,
+          /&nbsp;|<a>|<\/a>|<pre style=\"padding-left: 40px;\"><span style=\"font-size: 12pt;\"><span class=\"hljs-keyword\">|<span class=\"hljs-built_in\">|<span class=\"hljs-string\">|<span class=\"hljs-number\">|<\/span><\/pre>|<div>|\r\n|<div>|<\/div>\r\n<\/div>|<strong>|<\/strong>|<p style=\"padding-left: 40px;\"><span style=\"font-size: 12pt;\"><code>|<\/code><\/span>|<ul class=\"wp-block-list\">\r\n<li>|<\/li>|\r\n<\/ul>|<p>|<\/p>|<ul>|<\/ul>|<li>|<\/li>|<strong>|<\/strong>|&nbsp;/g,
           ""
         );
         setLoading(true);
