@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { emailRegex, passwordRegex } from "../../utility/utils";
 import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
+import { ThreeDots } from "react-loader-spinner";
 import { SignUpApi } from "../../services/apiEndpoints";
 import { baseUrl } from "../../app.config";
 
@@ -133,14 +134,26 @@ const Signup = () => {
                 </div>
               )}
             </div>
-            <input
-              className="form__container__right-btn"
-              type="submit"
-              value="Register"
-            />
+            <button className="form__container__right-btn" type="submit">
+              {loading ? (
+                <div
+                  style={{
+                    display: "grid",
+                    justifyContent: "center",
+                    alignContent: "center",
+                    height: "42.4px",
+                  }}
+                >
+                  <ThreeDots height={10} size={5} color="white" />
+                </div>
+              ) : (
+                <>Signup</>
+              )}
+            </button>
           </form>
           <div className="form__container__sign">
-            Already registered?
+            <p className="form__container__sign-p">Already registered?</p>
+
             <button
               className="form__container__sign-btn"
               onClick={() => navigate("/")}

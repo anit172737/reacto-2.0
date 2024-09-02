@@ -17,6 +17,7 @@ const App = () => {
         style={{
           display: "grid",
           alignItems: "center",
+          justifyContent: "center",
           height: "100vh",
         }}
       >

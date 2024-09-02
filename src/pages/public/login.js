@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { emailRegex, passwordRegex } from "../../utility/utils";
 import { toast, Toaster } from "react-hot-toast";
+import { ThreeDots } from "react-loader-spinner";
 // import GoogleLoginBtn from "../../components/googleLoginBtn";
 import { gapi } from "gapi-script";
 import axios from "axios";
@@ -16,6 +17,7 @@ import { LoginApi } from "../../services/apiEndpoints";
 
 const Login = () => {
   const [networkAvailable, setNetworkAvailable] = useState();
+  const [loading, setLoading] = useState(false);
   const { userData } = useSelector((state) => state.userMaster);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -37,9 +39,11 @@ const Login = () => {
   const onSubmit = async (data) => {
     if (networkAvailable) {
       try {
+        setLoading(true);
         const res = await axios.post(baseUrl + LoginApi, data);
         if (!res.data.error) {
           // toast.success(res.data.message);
+          setLoading(false);
           let data = {
             userData: res.data.userData,
             token: res.data.token,
@@ -57,9 +61,11 @@ const Login = () => {
           // Cookies.set("token", res.data.token);
         } else {
           toast.error(res.data.error);
+          setLoading(false);
         }
       } catch (error) {
         toast.error(error.message);
+        setLoading(false);
       }
     } else {
       toast.error("Network issue!");
@@ -98,6 +104,8 @@ const Login = () => {
   useEffect(() => {
     setNetworkAvailable(navigator.onLine);
   }, []);
+
+  console.log("loading", loading);
   return (
     <div className="form">
       <div className="form__container">
@@ -171,11 +179,22 @@ const Login = () => {
                 </div>
               )}
             </div>
-            <input
-              className="form__container__right-btn"
-              type="submit"
-              value="Login"
-            />
+            <button className="form__container__right-btn" type="submit">
+              {loading ? (
+                <div
+                  style={{
+                    display: "grid",
+                    justifyContent: "center",
+                    alignContent: "center",
+                    height: "42.4px",
+                  }}
+                >
+                  <ThreeDots height={10} size={5} color="white" />
+                </div>
+              ) : (
+                <>Login</>
+              )}
+            </button>
           </form>
           <div className="form__container__or">
             <hr className="form__container__or-hr" />
@@ -184,8 +203,9 @@ const Login = () => {
           </div>
 
           {/* <GoogleLoginBtn /> */}
-          <div className="form__container__sign">
-            Not a member?
+          <div className="form__container__sign ">
+            <p className="form__container__sign-p"> Not a member?</p>
+
             <button
               className="form__container__sign-btn"
               onClick={() => navigate("/signup")}

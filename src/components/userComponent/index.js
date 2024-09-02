@@ -220,10 +220,7 @@ const UserComponent = ({
             );
           })
         ) : (
-          <div
-            className="interviewQ_sec"
-            style={{ paddingBottom: "0px", textAlign: "center" }}
-          >
+          <div className="interviewQ_sec interviewQ_sec-noData">
             No data found
           </div>
         )

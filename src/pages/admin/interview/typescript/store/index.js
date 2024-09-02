@@ -25,6 +25,9 @@ export const fetchTypeQtnList = createAsyncThunk(
       if (response.data.hasOwnProperty("error")) {
         setLoader(false);
         toast.error(response.data.error);
+        return {
+          qtnList: [],
+        };
       } else {
         setLoader(false);
         return {
@@ -34,8 +37,10 @@ export const fetchTypeQtnList = createAsyncThunk(
       }
     } catch (error) {
       setLoader(false);
-      console.log("error", error);
       toast.error(error?.response?.data?.message);
+      return {
+        qtnList: [],
+      };
     }
   }
 );
@@ -43,7 +48,6 @@ export const fetchTypeQtnList = createAsyncThunk(
 export const addTypeQtn = createAsyncThunk(
   "typeMaster",
   async (params, { dispatch }) => {
-    console.log("params.data", params.data);
     try {
       await privatePost(TypeAdd, params.data).then((res) =>
         res.data.error

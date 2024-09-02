@@ -11,15 +11,15 @@ const AdminLayout = () => {
         <AdminSidebar />
         <div className="privateLayout_container-outletSec">
           <Suspense
-            fallback={
-              <Audio
-                height="70"
-                width="70"
-                radius="9"
-                color="#7e77fd"
-                ariaLabel="loading"
-              />
-            }
+          // fallback={
+          //   <Audio
+          //     height="70"
+          //     width="70"
+          //     radius="9"
+          //     color="#7e77fd"
+          //     ariaLabel="loading"
+          //   />
+          // }
           >
             <Outlet />
           </Suspense>

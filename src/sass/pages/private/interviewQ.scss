@@ -24,6 +24,11 @@
     border-radius: 10px;
     padding: 0px 20px 9px;
 
+    &-noData {
+      padding: 20px 0px 20px !important;
+      text-align: center;
+    }
+
     &-1 {
       display: grid;
       grid-auto-flow: column;
