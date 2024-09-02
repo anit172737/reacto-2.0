@@ -140,9 +140,10 @@ const UserComponent = ({
 
   const handlePageSizeChange = (e) => {
     setPageSize(e.target.value);
+    setCurrentPage(1);
   };
 
-  useEffect(() => {
+  useMemo(() => {
     let Menu;
     if (qtnList) {
       Menu = qtnList.map((e) => {
@@ -157,7 +158,11 @@ const UserComponent = ({
 
   return (
     <div className="interviewQ">
-      <Header title={`${title} Questions`} setSearch={setSearch} />
+      <Header
+        title={`${title} Questions`}
+        setSearch={setSearch}
+        setCurrentPage={setCurrentPage}
+      />
       {!loader ? (
         searchMenu?.length !== 0 ? (
           searchMenu?.map((qtn) => {
@@ -227,7 +232,7 @@ const UserComponent = ({
           <ThreeDots size={10} color="#6c63ff" />
         </div>
       )}
-      {!loader && (
+      {!loader && qtnList && qtnList.length !== 0 && (
         <CustomPagination
           className="pagination-bar"
           currentPage={currentPage}
