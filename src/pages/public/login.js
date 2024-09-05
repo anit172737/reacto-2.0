@@ -41,8 +41,8 @@ const Login = () => {
   const onSubmit = async (data) => {
     if (networkAvailable) {
       try {
-        const captchaToken = await executeRecaptcha("login");
         setLoading(true);
+        const captchaToken = await executeRecaptcha("login");
         const res = await axios.post(baseUrl + LoginApi, {
           ...data,
           captchaToken,
