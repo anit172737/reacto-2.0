@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import img1 from "../../assets/images/1.png";
 import "../../sass/pages/public/login.scss";
 import { useForm, Controller } from "react-hook-form";
@@ -14,6 +14,7 @@ import Cookies from "js-cookie";
 import { handleLogin, showLoginToast } from "../../redux/userSlices";
 import { baseUrl } from "../../app.config";
 import { LoginApi } from "../../services/apiEndpoints";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const Login = () => {
   const [networkAvailable, setNetworkAvailable] = useState();
@@ -21,6 +22,7 @@ const Login = () => {
   const { userData } = useSelector((state) => state.userMaster);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const defaultValues = {
     email: "",
     password: "",
@@ -39,8 +41,12 @@ const Login = () => {
   const onSubmit = async (data) => {
     if (networkAvailable) {
       try {
+        const captchaToken = await executeRecaptcha("login");
         setLoading(true);
-        const res = await axios.post(baseUrl + LoginApi, data);
+        const res = await axios.post(baseUrl + LoginApi, {
+          ...data,
+          captchaToken,
+        });
         if (!res.data.error) {
           // toast.success(res.data.message);
           setLoading(false);
@@ -91,8 +97,6 @@ const Login = () => {
     });
   };
 
-  // console.log("userData", userData);
-
   useEffect(nav, []);
 
   useEffect(() => {
@@ -105,7 +109,6 @@ const Login = () => {
     setNetworkAvailable(navigator.onLine);
   }, []);
 
-  console.log("loading", loading);
   return (
     <div className="form">
       <div className="form__container">
