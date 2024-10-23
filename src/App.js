@@ -8,11 +8,11 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 const App = () => {
   const [googleLogin, setGoogleLogin] = useState(false);
-  const [user, setUser] = useState(null);
+  const [drop, setDrop] = useState(false);
   const googleLogoutRef = useRef(null);
   return (
     <LoginContext.Provider
-      value={{ googleLogin, setGoogleLogin, user, setUser, googleLogoutRef }}
+      value={{ googleLogin, setGoogleLogin, drop, setDrop, googleLogoutRef }}
     >
       <GoogleReCaptchaProvider
         reCaptchaKey={process.env.REACT_APP_CAPTCHA_SITE_KEY}

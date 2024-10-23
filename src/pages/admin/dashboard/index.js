@@ -20,7 +20,7 @@ const Dashboard = () => {
     toast.success("Login Successful!", { id: userData?.userData?.id });
   }
 
-  return <div>Dashboard</div>;
+  return <div>admin Dashboard</div>;
 };
 
 export default Dashboard;

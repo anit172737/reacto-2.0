@@ -66,6 +66,7 @@ const Login = () => {
           // }, 1000);
           // Cookies.set("token", res.data.token);
         } else {
+          console.log("res.data", res.data);
           toast.error(res.data.error);
           setLoading(false);
         }

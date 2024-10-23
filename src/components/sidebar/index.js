@@ -6,12 +6,11 @@ import Menu from "./sidebarMenu";
 import { LoginContext } from "../../utility/loginContext";
 
 const Sidebar = () => {
-  const { user } = useContext(LoginContext);
+  const { drop, setDrop } = useContext(LoginContext);
   const googleLogin = localStorage.getItem("googleLogin");
   const [data, setData] = useState(Menu);
-  const [drop, setDrop] = useState(false);
+  // const [drop, setDrop] = useState(false);
   const navigate = useNavigate();
-  console.log("user", user);
 
   const handleLogout = () => {
     console.log("Logout Success!");
